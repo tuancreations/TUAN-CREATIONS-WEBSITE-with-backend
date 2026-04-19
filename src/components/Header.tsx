@@ -75,7 +75,7 @@ const Header: React.FC = memo(() => {
         <div className="flex justify-between items-center py-3">
           <Link to="/" className="flex items-center mr-8">
             <img
-              src="/tuan-logo.svg"
+              src="/tuan-logo.png"
               alt="TUAN Creations Company LTD Logo"
               className="h-14 w-auto mr-3"
             />

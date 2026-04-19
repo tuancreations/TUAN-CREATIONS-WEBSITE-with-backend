@@ -8,7 +8,7 @@ const TUANMarketPlacePage: React.FC = () => {
       description:
         "Creators of Africa-inspired digital solutions - software, telecom, media and creative technology.",
       category: "Software, Telecom & Media",
-      image: "/tuan-logo.svg",
+      image: "/tuan-logo.png",
     },
     {
       name: "NexTech Uganda",

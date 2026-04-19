@@ -14,7 +14,7 @@ const Footer = memo(() => {
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2 flex flex-col items-start">
             <img
-              src="/tuan-logo.svg"
+              src="/tuan-logo.png"
               alt="TUAN Creations Company LTD Logo"
               className="h-16 w-auto mb-4"
             />
