@@ -14,6 +14,9 @@ export default function DashboardLayout() {
   const { user, logout } = useAuth();
   const location = useLocation();
   const isGuest = !user;
+  const dashboardNote = isGuest
+    ? "You are browsing the TUAN Digital Platform as a guest. Sign in or sign up to save your choices, submit requests, and manage your activity."
+    : "Your TUAN workspace is ready. Use this space to manage learning, services, media, collaboration, and innovation from one account.";
 
   return (
     <div className="min-h-screen bg-[var(--surface)] text-[var(--text)]">
@@ -31,9 +34,7 @@ export default function DashboardLayout() {
           <p className="mt-2 text-sm text-[var(--text-soft)]">
             {isGuest ? "Guest access" : `${user?.name} (${user?.role})`}
           </p>
-          <p className="mt-2 text-xs text-[var(--text-soft)]">
-            You can browse the TUAN Digital Platform as a guest. Sign in or sign up to save your choices, submit requests, and manage your activity.
-          </p>
+          <p className="mt-2 text-xs text-[var(--text-soft)]">{dashboardNote}</p>
 
           <nav className="mt-6 flex flex-col gap-2">
             {moduleNav.map((item) => (
@@ -84,6 +85,11 @@ export default function DashboardLayout() {
           {isGuest && (
             <div className="mb-6 rounded-2xl border border-[color:rgba(220,173,75,0.35)] bg-[color:rgba(220,173,75,0.08)] p-4 text-sm text-[var(--text-soft)]">
               You are browsing as a guest. Log in or sign up when you are ready to choose a service, save progress, or submit a request.
+            </div>
+          )}
+          {!isGuest && (
+            <div className="mb-6 rounded-2xl border border-[color:rgba(70,216,195,0.28)] bg-[color:rgba(70,216,195,0.08)] p-4 text-sm text-[var(--text-soft)]">
+              Signed in as {user?.name}. This is your private TUAN workspace for your selected role.
             </div>
           )}
           <Outlet />
