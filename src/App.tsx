@@ -13,6 +13,7 @@ import MarketplacePage from "./modules/marketplace/MarketplacePage";
 import MediaPage from "./modules/media/MediaPage";
 import CollaborationPage from "./modules/collaboration/CollaborationPage";
 import IotPage from "./modules/iot/IotPage";
+import LiveSessionPage from "./pages/LiveSessionPage";
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
       <Route element={<DashboardLayout />}>
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/academy" element={<AcademyPage />} />
+        <Route path="/live-session" element={<LiveSessionPage />} />
         <Route path="/marketplace" element={<MarketplacePage />} />
         <Route path="/media" element={<MediaPage />} />
         <Route path="/collaboration" element={<CollaborationPage />} />

@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Select from "react-select";
 import countryList from "react-select-country-list";
 import { Globe, X } from "lucide-react";
+import { courses } from "../services/mockApi";
 
 type Role = "instructor" | "co-instructor" | "student" | "admin";
 
@@ -39,6 +41,13 @@ const nowFormatted = () =>
   new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
 export default function LiveSessionPage() {
+  const [searchParams] = useSearchParams();
+  const selectedCourseId = Number(searchParams.get("courseId"));
+  const selectedCourse = useMemo(
+    () => courses.find((course) => course.id === selectedCourseId),
+    [selectedCourseId]
+  );
+
   // ----- demo/local state -----
   const [currentUser, setCurrentUser] = useState<User>({
     id: "u-you",
@@ -49,8 +58,8 @@ export default function LiveSessionPage() {
 
   const [session, setSession] = useState<SessionMeta>({
     id: "s-1",
-    title: "Advanced AI & Machine Learning",
-    instructor: "Eng. Godwin Ofwono",
+    title: selectedCourse?.title ?? "Advanced AI & Machine Learning",
+    instructor: selectedCourse?.instructor ?? "Eng. Godwin Ofwono",
     topic: "Neural Networks and Deep Learning",
     startTime: new Date(Date.now() + 1000 * 60 * 2).toISOString(), // 2 min later
     durationMinutes: 120,
@@ -113,6 +122,15 @@ export default function LiveSessionPage() {
   }, [email, phoneNumber, countryCode, showToast]);
 
   // ----- Chat -----
+  useEffect(() => {
+    if (!selectedCourse) return;
+    setSession((prev) => ({
+      ...prev,
+      title: selectedCourse.title,
+      instructor: selectedCourse.instructor,
+    }));
+  }, [selectedCourse]);
+
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatMessages]);

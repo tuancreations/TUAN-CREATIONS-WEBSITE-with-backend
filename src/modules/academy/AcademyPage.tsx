@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { courses } from "../../services/mockApi";
 
 export default function AcademyPage() {
@@ -24,7 +25,9 @@ export default function AcademyPage() {
             <p className="mt-1 text-sm text-[var(--text-soft)]">Recording: Saved on host broadcaster page</p>
             <div className="mt-4 flex gap-2">
               <button className="btn-primary text-xs">Enroll</button>
-              <button className="btn-ghost text-xs">Join Live</button>
+              <Link className="btn-ghost text-xs" to={`/live-session?courseId=${course.id}`}>
+                Join Live
+              </Link>
             </div>
           </article>
         ))}
