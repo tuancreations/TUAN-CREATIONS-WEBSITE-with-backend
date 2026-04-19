@@ -77,9 +77,13 @@ export default function DashboardLayout() {
               <Link className="text-sm text-[var(--gold)] hover:underline" to="/">
                 Public Site
               </Link>
-              <Link className="text-sm text-[var(--gold)] hover:underline" to="/auth">
-                Login / Signup
-              </Link>
+              {isGuest ? (
+                <Link className="text-sm text-[var(--gold)] hover:underline" to="/auth">
+                  Login / Signup
+                </Link>
+              ) : (
+                <span className="text-sm text-[var(--text-soft)]">Signed in as {user?.role}</span>
+              )}
             </div>
           </div>
           {isGuest && (
