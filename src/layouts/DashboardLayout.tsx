@@ -28,7 +28,7 @@ export default function DashboardLayout() {
             </span>
             <div>
               <span className="font-display text-lg">TUAN Digital Platform</span>
-              <p className="mt-1 text-[11px] leading-tight text-[var(--text-soft)]">The United African Nation - "All-in-One Digital Space"</p>
+              <p className="mt-1 text-[11px] leading-tight text-[var(--text-soft)]">[The United African Nation - "All-in-One Digital Space"]</p>
             </div>
           </Link>
           <p className="mt-2 text-sm text-[var(--text-soft)]">

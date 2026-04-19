@@ -22,7 +22,7 @@ export default function HomePage() {
           </span>
           <div>
             <p className="eyebrow">TUAN Digital Platform</p>
-            <p className="mt-1 text-xs text-[var(--text-soft)]">The United African Nation - "All-in-One Digital Space"</p>
+            <p className="mt-1 text-xs text-[var(--text-soft)]">[The United African Nation - "All-in-One Digital Space"]</p>
           </div>
         </div>
         <h1 className="mt-5 max-w-4xl font-display text-5xl leading-tight sm:text-6xl">

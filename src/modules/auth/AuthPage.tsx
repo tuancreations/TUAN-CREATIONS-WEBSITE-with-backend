@@ -25,7 +25,6 @@ export default function AuthPage() {
       <div>
         <p className="eyebrow">Welcome</p>
         <h1 className="mt-4 font-display text-5xl leading-tight">Identity unlocks the full TUAN Digital Platform.</h1>
-        <p className="mt-2 text-sm text-[var(--text-soft)]">The United African Nation - "All-in-One Digital Space"</p>
         <p className="mt-5 max-w-xl text-[var(--text-soft)]">
           Sign in to access your role-based platform space, verification status, and services across academy,
           marketplace, media, collaboration, and innovation programs.
