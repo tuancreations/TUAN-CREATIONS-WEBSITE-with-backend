@@ -29,7 +29,7 @@ const divisions = [
   {
     icon: Rocket,
     name: "Aerospace, Embedded & Semiconductor Systems",
-    description: "Develop satellites, UAVs, embedded electronics, and a chip design/manufacturing roadmap.",
+    description: "Lead research, design and development of satellites, UAVs, embedded electronics, and a chip design/manufacturing roadmap.",
     color: "from-red-500 to-red-600",
     services: ["Satellite Technology", "UAV Development", "Embedded Systems Engineering", "Semiconductor Chip Design", "Chip Manufacturing Partnerships"],
     to: "/dashboard",
