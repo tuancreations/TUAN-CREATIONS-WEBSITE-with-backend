@@ -7,7 +7,7 @@ const moduleNav = [
   { to: "/marketplace", label: "Marketplace" },
   { to: "/media", label: "Media" },
   { to: "/collaboration", label: "Collaboration" },
-  { to: "/iot", label: "IoT & Innovation" },
+  { to: "/iot", label: "TUAN Innovations" },
 ];
 
 export default function DashboardLayout() {
