@@ -149,9 +149,11 @@ body {
   border: 2px solid #f5c518;
   border-radius: 9999px;
   overflow: hidden;
-  padding: 4px 10px;
+  padding: 3px 14px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
   isolation: isolate;
+  transform: scale(1.08);
+  transform-origin: center;
 }
 
 .logo-oval-shell-img {
@@ -160,7 +162,7 @@ body {
   width: auto;
   max-width: none;
   object-fit: cover;
-  transform: scale(1.12);
+  transform: scale(1.16);
   transform-origin: center;
 }
 

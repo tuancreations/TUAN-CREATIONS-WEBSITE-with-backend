@@ -26,7 +26,7 @@ const HomePage = memo(() => {
       {/* Hero Section */}
       <section className="bg-amber-600 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="logo-oval-shell mx-auto mb-6 h-16">
+          <span className="logo-oval-shell mx-auto mb-6 h-20">
             <img
               src="/tuan-logo.png"
               alt="TUAN Creations Company LTD Logo"

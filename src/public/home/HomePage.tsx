@@ -14,7 +14,7 @@ export default function HomePage() {
     <div>
       <section className="mx-auto max-w-7xl px-4 pb-20 pt-16 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
-          <span className="logo-oval-shell h-20">
+          <span className="logo-oval-shell h-24">
             <img
               src="/tuan-logo.png"
               alt="TUAN Creations Company LTD Logo"

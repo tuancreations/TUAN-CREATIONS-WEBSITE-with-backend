@@ -65,7 +65,7 @@ const TUANMarketPlacePage: React.FC = () => {
           >
             <div className="bg-gray-50 p-6 flex items-center justify-center">
               {company.image === "/tuan-logo.png" ? (
-                <span className="logo-oval-shell h-20">
+                <span className="logo-oval-shell h-24">
                   <img src={company.image} alt={company.name} className="logo-oval-shell-img" />
                 </span>
               ) : (

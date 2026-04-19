@@ -20,7 +20,7 @@ export default function DashboardLayout() {
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[250px_1fr] lg:px-8">
         <aside className="h-fit rounded-3xl border border-[var(--line)] bg-[var(--card)] p-5">
           <Link to="/dashboard" className="flex items-center gap-3 text-[var(--gold)]">
-            <span className="logo-oval-shell h-10">
+            <span className="logo-oval-shell h-12">
               <img src="/tuan-logo.png" alt="TUAN Creations Company LTD Logo" className="logo-oval-shell-img" />
             </span>
             <span className="font-display text-lg">TUAN Creations Company LTD</span>
