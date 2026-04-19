@@ -74,7 +74,7 @@ const Header: React.FC = memo(() => {
         {/* 🔹 Logo Section */}
         <div className="flex justify-between items-center py-3">
           <Link to="/" className="flex items-center mr-8">
-            <span className="logo-container mr-3 h-16">
+            <span className="logo-container logo-container-sm mr-3">
               <img
                 src="/tuan-logo.png"
                 alt="TUAN Creations Company Ltd Logo"

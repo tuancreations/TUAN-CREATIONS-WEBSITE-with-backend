@@ -152,6 +152,11 @@ body {
   background: transparent;
 }
 
+.logo-container-sm {
+  width: 168px;
+  height: 105px;
+}
+
 .logo-container img {
   width: 110%;
   height: auto;
