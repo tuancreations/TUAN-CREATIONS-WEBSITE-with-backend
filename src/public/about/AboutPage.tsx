@@ -2,15 +2,15 @@ export default function AboutPage() {
   const pillars = [
     {
       title: "The Problem",
-      text: "Africa's digital ecosystem is fragmented, expensive, and exposed to scams, unverified providers, and scattered tools.",
+      text: "Many people and businesses struggle with scattered digital tools, high costs, and unverified providers.",
     },
     {
       title: "The Solution",
-      text: "TUAN Digital unifies services, learning, media, innovation, and collaboration in one trusted environment.",
+      text: "TUAN Digital brings services, learning, media, and innovation together in one trusted platform.",
     },
     {
       title: "Shared Partner Model",
-      text: "Partners operate through one TUAN Digital Platform workspace to deliver classes, services, adverts, and client work professionally.",
+      text: "ICT companies and freelancers can partner with TUAN to deliver quality services through one coordinated system.",
     },
   ];
 
@@ -23,9 +23,9 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <p className="eyebrow">About TUAN</p>
-      <h1 className="mt-4 max-w-3xl font-display text-5xl">Building Africa's trusted digital operating platform.</h1>
+      <h1 className="mt-4 max-w-3xl font-display text-5xl">Building a trusted digital platform for growth and opportunity.</h1>
       <p className="mt-6 max-w-4xl text-[var(--text-soft)]">
-        TUAN Creations Company Ltd builds and operates TUAN Digital Platform for African realities: high data costs, fragmented systems, unverified services, and the need for one trusted space for skills, services, media, and innovation.
+        TUAN Creations Company Ltd builds and operates TUAN Digital Platform so clients can access trusted services, students can learn practical skills, investors can monitor growth, and partners can scale with confidence.
       </p>
 
       <div className="mt-10 grid gap-5 md:grid-cols-3">
@@ -38,12 +38,12 @@ export default function AboutPage() {
       </div>
 
       <div className="mt-10 card">
-        <h2 className="font-display text-3xl">Why TUAN Digital Is 10x Better</h2>
+        <h2 className="font-display text-3xl">Why People Choose TUAN Digital</h2>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
-          <p className="text-sm text-[var(--text-soft)]">Integration: one place for skills, services, collaboration, marketplace, IoT, and media.</p>
-          <p className="text-sm text-[var(--text-soft)]">Trust: verified identities reduce fraud and improve quality of delivery.</p>
-          <p className="text-sm text-[var(--text-soft)]">Affordability: shared infrastructure lowers costs for providers and users.</p>
-          <p className="text-sm text-[var(--text-soft)]">Scalability: built to support thousands of providers across multiple African countries.</p>
+          <p className="text-sm text-[var(--text-soft)]">One connected journey from learning to hiring, media exposure, and project delivery.</p>
+          <p className="text-sm text-[var(--text-soft)]">Verified profiles and clear trust signals that help users choose with confidence.</p>
+          <p className="text-sm text-[var(--text-soft)]">Affordable access for students, startups, and growing businesses.</p>
+          <p className="text-sm text-[var(--text-soft)]">Built for scale across multiple sectors and regions.</p>
         </div>
       </div>
 

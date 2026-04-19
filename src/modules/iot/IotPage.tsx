@@ -49,8 +49,8 @@ export default function IotPage() {
         </div>
         <h2 className="mt-3 font-display text-4xl">TUAN Innovations</h2>
         <p className="mt-3 max-w-3xl text-sm text-[var(--text-soft)] sm:text-base">
-          A practical innovation space for robotics, IoT, and real-world prototyping. Teams can explore guided tracks,
-          access kits, and turn ideas into solutions for communities, schools, and local industries.
+          A practical innovation space for robotics, IoT, and real-world prototyping. Students, founders, and institutions can explore guided tracks,
+          access kits, and turn ideas into solutions that solve real problems.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <button className="btn-primary text-sm">Join Innovation Program</button>
@@ -74,8 +74,7 @@ export default function IotPage() {
         <article className="card">
           <h3 className="font-display text-2xl">Who this supports</h3>
           <p className="mt-4 text-sm text-[var(--text-soft)]">
-            Students, schools, innovators, youth groups, and community teams that need a trusted place to learn,
-            build, and test technology with practical support.
+            Students, schools, innovators, youth groups, partners, and investors looking for practical innovation outcomes.
           </p>
           <div className="mt-5 rounded-2xl border border-[var(--line)] bg-[var(--panel)] p-4">
             <p className="text-xs uppercase tracking-wide text-[var(--text-soft)]">Access Model</p>

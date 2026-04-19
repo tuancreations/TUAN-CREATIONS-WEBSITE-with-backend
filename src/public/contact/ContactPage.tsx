@@ -29,11 +29,11 @@ export default function ContactPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <p className="eyebrow">Contact</p>
-      <h1 className="mt-4 font-display text-5xl">Smart intake for support, partnerships, and trust.</h1>
+      <h1 className="mt-4 font-display text-5xl">Talk to us about support, partnerships, and service requests.</h1>
 
       <div className="mt-10 grid gap-8 lg:grid-cols-2">
         <form onSubmit={onSubmit} className="card space-y-4">
-          <h2 className="font-display text-2xl">Submit Inquiry</h2>
+          <h2 className="font-display text-2xl">Send a Message</h2>
           <label className="field-label">Name<input className="field-input" value={name} onChange={(e) => setName(e.target.value)} required /></label>
           <label className="field-label">Email<input type="email" className="field-input" value={email} onChange={(e) => setEmail(e.target.value)} required /></label>
           <label className="field-label">Topic
@@ -61,7 +61,7 @@ export default function ContactPage() {
           <div className="card">
             <h2 className="font-display text-2xl">Next Step</h2>
             <p className="mt-3 text-sm text-[var(--text-soft)]">
-              Thank you for reaching out. Your message is directed to the right TUAN support team so we can respond quickly.
+              Thank you for reaching out. We route your message to the right team so you get a faster and more relevant response.
             </p>
             <p className="mt-6 rounded-xl border border-[var(--line)] bg-[var(--panel)] p-4 text-sm">
               {result ? `Your inquiry has been sent to: ${result}` : "Submit your message to see who will handle it."}

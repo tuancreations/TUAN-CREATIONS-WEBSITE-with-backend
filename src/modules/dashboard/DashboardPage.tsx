@@ -2,10 +2,10 @@ import { dashboardMetrics } from "../../services/mockApi";
 import { useAuth } from "../../store/auth";
 
 const roleTips = {
-  student: "Continue learning, join live sessions, and access recorded lectures.",
-  partner: "Publish courses, create listings, stream media, and manage clients from one dashboard.",
-  client: "Browse verified providers, request services, and track project delivery.",
-  investor: "Monitor verification, growth metrics, and ecosystem activity across services.",
+  student: "Continue learning, join live classes, and revisit recordings anytime.",
+  partner: "Show your services, attract new clients, and manage delivery in one place.",
+  client: "Find trusted providers, request services, and follow progress from start to finish.",
+  investor: "Track growth, partner activity, and platform performance with clear visibility.",
 };
 
 export default function DashboardPage() {
@@ -18,7 +18,7 @@ export default function DashboardPage() {
         <h2 className="mt-2 font-display text-3xl">{user?.name}</h2>
         <p className="mt-2 text-sm text-[var(--text-soft)]">Your path: {roleTips[user?.role ?? "student"]}</p>
         <p className="mt-3 text-sm text-[var(--text-soft)]">
-          This dashboard represents the shared partner model: one interface for classes, marketplace activity, TUAN TV publishing, projects, and innovation work.
+          This dashboard helps you move smoothly across learning, services, media, collaboration, and innovation opportunities.
         </p>
       </div>
 

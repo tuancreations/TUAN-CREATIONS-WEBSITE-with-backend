@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 
 const discovery = [
-  { title: "Explore Vision", to: "/about", description: "See the problem TUAN Digital solves and why the platform matters now." },
-  { title: "Explore Services", to: "/divisions", description: "See everything TUAN Digital offers for learning, services, media, and innovation." },
-  { title: "Start Learning", to: "/academy", description: "Access verified live academy lessons, partner classes, and recordings." },
-  { title: "Watch TUAN TV", to: "/media", description: "Stream educational broadcasts, partner promotions, and recorded channels." },
-  { title: "Hire Services", to: "/marketplace", description: "Find vetted freelancers, agencies, and digital service providers." },
-  { title: "Join Ecosystem", to: "/auth", description: "Create a role-based identity and unlock your TUAN Digital Platform workspace." },
+  { title: "Explore Our Vision", to: "/about", description: "Understand what TUAN is building and how it creates value for communities and businesses." },
+  { title: "Explore Divisions", to: "/divisions", description: "See the full range of services from software and telecom to media, academy, and innovation." },
+  { title: "Start Learning", to: "/academy", description: "Join live classes, learn from trusted instructors, and replay lessons anytime." },
+  { title: "Watch TUAN TV", to: "/media", description: "Follow live programs, partner channels, and recorded shows in one place." },
+  { title: "Hire Trusted Partners", to: "/marketplace", description: "Choose verified ICT companies and freelancers for your next project." },
+  { title: "Join as Student, Client, Partner, or Investor", to: "/auth", description: "Create your account and access services tailored to your role." },
 ];
 
 export default function HomePage() {
@@ -23,10 +23,10 @@ export default function HomePage() {
           <p className="eyebrow">TUAN Digital Platform</p>
         </div>
         <h1 className="mt-5 max-w-4xl font-display text-5xl leading-tight sm:text-6xl">
-          One trusted platform for skills, services, media, innovation, and collaboration.
+          One trusted place for learning, business services, media, innovation, and partnerships.
         </h1>
         <p className="mt-6 max-w-3xl text-lg text-[var(--text-soft)]">
-          TUAN Digital is a product of TUAN Creations Company Ltd, built to unify Africa's fragmented digital ecosystem into one locally guided, affordable, and verified environment.
+          TUAN Digital is a product of TUAN Creations Company Ltd, designed to help clients, students, investors, and partners connect, grow, and succeed with confidence.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link className="btn-primary" to="/auth">Create Your Account</Link>
@@ -49,27 +49,27 @@ export default function HomePage() {
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             <div>
               <h3 className="font-display text-xl">Software & ICT Services</h3>
-              <p className="mt-2 text-sm text-[var(--text-soft)]">Accessible tools and digital support for individuals, SMEs, creators, and institutions.</p>
+              <p className="mt-2 text-sm text-[var(--text-soft)]">Practical digital services for businesses, institutions, and organizations ready to scale.</p>
             </div>
             <div>
               <h3 className="font-display text-xl">TUAN Live Academy</h3>
-              <p className="mt-2 text-sm text-[var(--text-soft)]">Verified live courses and recordings hosted on the instructor or broadcaster page.</p>
+              <p className="mt-2 text-sm text-[var(--text-soft)]">Trusted learning paths for students and professionals, with live sessions and replays.</p>
             </div>
             <div>
               <h3 className="font-display text-xl">TUAN Marketplace</h3>
-              <p className="mt-2 text-sm text-[var(--text-soft)]">A vetted space for products, services, startups, and agencies with verified identities.</p>
+              <p className="mt-2 text-sm text-[var(--text-soft)]">A verified space where clients can find reliable freelancers, firms, and digital solutions.</p>
             </div>
             <div>
               <h3 className="font-display text-xl">Collaboration Tools</h3>
-              <p className="mt-2 text-sm text-[var(--text-soft)]">Project, messaging, and team tools for small groups and community organisations.</p>
+              <p className="mt-2 text-sm text-[var(--text-soft)]">Simple teamwork tools for project updates, communication, and shared delivery.</p>
             </div>
             <div>
               <h3 className="font-display text-xl">TUAN TV</h3>
-              <p className="mt-2 text-sm text-[var(--text-soft)]">Education, innovation showcases, partner promotions, and recorded broadcasts.</p>
+              <p className="mt-2 text-sm text-[var(--text-soft)]">Media that educates, promotes partner work, and keeps communities informed.</p>
             </div>
             <div>
               <h3 className="font-display text-xl">TUAN Innovations</h3>
-              <p className="mt-2 text-sm text-[var(--text-soft)]">Practical IoT and robotics tracks, prototype support, and chip design pathways for builders and institutions.</p>
+              <p className="mt-2 text-sm text-[var(--text-soft)]">Hands-on innovation tracks in IoT, robotics, and chip design for future-ready builders.</p>
             </div>
           </div>
         </div>

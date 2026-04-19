@@ -6,10 +6,10 @@ export default function AcademyPage() {
       <div className="card">
         <h2 className="font-display text-3xl">TUAN Live Academy</h2>
         <p className="mt-2 text-sm text-[var(--text-soft)]">
-          Browse verified courses, join live sessions, and access recordings stored on the specific instructor or broadcaster page.
+          Choose trusted courses, join live sessions, and learn at your own pace with replay access.
         </p>
         <p className="mt-3 text-sm text-[var(--text-soft)]">
-          Whether the lecture is hosted by TUAN admin or a partner, every live session remains recorded for learners to revisit later.
+          Whether a class is hosted by TUAN or a partner, every session is recorded so students can revisit key lessons.
         </p>
       </div>
 

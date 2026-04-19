@@ -6,10 +6,10 @@ export default function MarketplacePage() {
       <div className="card">
         <h2 className="font-display text-3xl">TUAN Marketplace</h2>
         <p className="mt-2 text-sm text-[var(--text-soft)]">
-          Explore verified identities, compare offerings, and move from discovery to order with trust signals.
+          Discover trusted providers, compare offers clearly, and place orders with confidence.
         </p>
         <p className="mt-3 text-sm text-[var(--text-soft)]">
-          Freelancers, tech startups, agencies, and service providers can showcase their innovations, products, and services through the platform.
+          Freelancers, ICT companies, and agencies can showcase services and products to clients ready to buy.
         </p>
       </div>
 
@@ -25,7 +25,7 @@ export default function MarketplacePage() {
             <h3 className="mt-3 font-display text-xl">{item.name}</h3>
             <p className="mt-2 text-sm text-[var(--text-soft)]">{item.provider}</p>
             <p className="mt-4 text-lg text-[var(--gold)]">{item.price}</p>
-            <p className="mt-1 text-xs text-[var(--text-soft)]">Verified identity required for safe transactions</p>
+            <p className="mt-1 text-xs text-[var(--text-soft)]">Verified profiles help clients transact safely</p>
             <div className="mt-4 flex gap-2">
               <button className="btn-primary text-xs">Order</button>
               <button className="btn-ghost text-xs">Track</button>
