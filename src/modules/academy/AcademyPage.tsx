@@ -6,7 +6,10 @@ export default function AcademyPage() {
       <div className="card">
         <h2 className="font-display text-3xl">TUAN Live Academy</h2>
         <p className="mt-2 text-sm text-[var(--text-soft)]">
-          Browse courses, enroll, join live sessions, and access recordings linked to verified instructors.
+          Browse verified courses, join live sessions, and access recordings stored on the specific instructor or broadcaster page.
+        </p>
+        <p className="mt-3 text-sm text-[var(--text-soft)]">
+          Whether the lecture is hosted by TUAN admin or a partner, every live session remains recorded for learners to revisit later.
         </p>
       </div>
 
@@ -18,6 +21,7 @@ export default function AcademyPage() {
             <p className="mt-2 text-sm text-[var(--text-soft)]">Instructor: {course.instructor}</p>
             <p className="mt-1 text-sm text-[var(--text-soft)]">Duration: {course.duration}</p>
             <p className="mt-1 text-sm text-[var(--text-soft)]">Enrolled: {course.enrolled.toLocaleString()}</p>
+            <p className="mt-1 text-sm text-[var(--text-soft)]">Recording: Saved on host broadcaster page</p>
             <div className="mt-4 flex gap-2">
               <button className="btn-primary text-xs">Enroll</button>
               <button className="btn-ghost text-xs">Join Live</button>

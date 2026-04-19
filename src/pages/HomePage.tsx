@@ -27,8 +27,8 @@ const HomePage = memo(() => {
       <section className="bg-amber-600 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <img 
-            src="/logo-black.png" 
-            alt="TUAN Logo" 
+            src="/tuan-logo.svg" 
+            alt="TUAN Creations Company LTD Logo" 
             className="h-16 w-auto mx-auto mb-6"
           />
           <h1 className="text-5xl md:text-6xl font-bold mb-6">

@@ -75,12 +75,12 @@ const Header: React.FC = memo(() => {
         <div className="flex justify-between items-center py-3">
           <Link to="/" className="flex items-center mr-8">
             <img
-              src="/logo-black.png"
-              alt="TUAN Logo"
+              src="/tuan-logo.svg"
+              alt="TUAN Creations Company LTD Logo"
               className="h-14 w-auto mr-3"
             />
             <span className="text-2xl font-bold text-gray-900 tracking-tight">
-              TUAN Creations Company Ltd
+              TUAN Creations Company LTD
             </span>
           </Link>
 

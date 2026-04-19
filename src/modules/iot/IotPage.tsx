@@ -10,7 +10,10 @@ export default function IotPage() {
       <div className="card">
         <h2 className="font-display text-3xl">IoT and Innovation Service</h2>
         <p className="mt-2 text-sm text-[var(--text-soft)]">
-          Discover innovation programs, access build resources, and share prototypes with the ecosystem.
+          Discover innovation programs, access learning kits, and share prototypes with schools, young innovators, and partner organisations.
+        </p>
+        <p className="mt-3 text-sm text-[var(--text-soft)]">
+          This hub is designed for robotics, IoT, and practical innovation content built for African learning environments.
         </p>
       </div>
 
@@ -20,6 +23,7 @@ export default function IotPage() {
             <h3 className="font-display text-xl">{program.title}</h3>
             <p className="mt-2 text-sm text-[var(--text-soft)]">Mode: {program.mode}</p>
             <p className="mt-2 text-sm text-[var(--gold)]">Seats: {program.seats}</p>
+            <p className="mt-1 text-xs text-[var(--text-soft)]">Includes kits, resources, and build support</p>
             <div className="mt-4 flex gap-2">
               <button className="btn-primary text-xs">Enroll</button>
               <button className="btn-ghost text-xs">Resources</button>

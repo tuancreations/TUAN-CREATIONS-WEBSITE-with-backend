@@ -10,7 +10,10 @@ export default function CollaborationPage() {
       <div className="card">
         <h2 className="font-display text-3xl">Collaboration Workspace</h2>
         <p className="mt-2 text-sm text-[var(--text-soft)]">
-          Create projects, invite teams, exchange updates, and move tasks from planning to delivery.
+          Create projects, invite teams, exchange updates, and manage work through a shared workspace built for small teams, creators, and community organisations.
+        </p>
+        <p className="mt-3 text-sm text-[var(--text-soft)]">
+          TUAN Digital keeps communication, task delivery, and client collaboration in one place.
         </p>
         <div className="mt-4 flex gap-2">
           <button className="btn-primary text-xs">Create Project</button>
@@ -24,6 +27,7 @@ export default function CollaborationPage() {
             <h3 className="font-display text-xl">{project.name}</h3>
             <p className="mt-2 text-sm text-[var(--text-soft)]">Team size: {project.team}</p>
             <p className="mt-2 text-sm text-[var(--gold)]">Status: {project.status}</p>
+            <p className="mt-1 text-xs text-[var(--text-soft)]">Supports project, communication, and delivery workflows</p>
             <div className="mt-4 flex gap-2">
               <button className="btn-ghost text-xs">Open Chat</button>
               <button className="btn-ghost text-xs">Manage Tasks</button>

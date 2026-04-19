@@ -1,4 +1,4 @@
-import { Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import PublicLayout from "./layouts/PublicLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
 import HomePage from "./public/home/HomePage";
@@ -13,23 +13,6 @@ import MarketplacePage from "./modules/marketplace/MarketplacePage";
 import MediaPage from "./modules/media/MediaPage";
 import CollaborationPage from "./modules/collaboration/CollaborationPage";
 import IotPage from "./modules/iot/IotPage";
-import { useAuth } from "./store/auth";
-
-function ProtectedRoute() {
-  const { isAuthenticated } = useAuth();
-  const location = useLocation();
-
-  if (!isAuthenticated) {
-    return <Navigate to="/auth" replace state={{ from: location.pathname }} />;
-  }
-
-  return <Outlet />;
-}
-
-function RedirectIfAuthenticated() {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <AuthPage />;
-}
 
 export default function App() {
   return (
@@ -40,18 +23,16 @@ export default function App() {
         <Route path="/divisions" element={<DivisionsPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/auth" element={<RedirectIfAuthenticated />} />
+        <Route path="/auth" element={<AuthPage />} />
       </Route>
 
-      <Route element={<ProtectedRoute />}>
-        <Route element={<DashboardLayout />}>
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/academy" element={<AcademyPage />} />
-          <Route path="/marketplace" element={<MarketplacePage />} />
-          <Route path="/media" element={<MediaPage />} />
-          <Route path="/collaboration" element={<CollaborationPage />} />
-          <Route path="/iot" element={<IotPage />} />
-        </Route>
+      <Route element={<DashboardLayout />}>
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/academy" element={<AcademyPage />} />
+        <Route path="/marketplace" element={<MarketplacePage />} />
+        <Route path="/media" element={<MediaPage />} />
+        <Route path="/collaboration" element={<CollaborationPage />} />
+        <Route path="/iot" element={<IotPage />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

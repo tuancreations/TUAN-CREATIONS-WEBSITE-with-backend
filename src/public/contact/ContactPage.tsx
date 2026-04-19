@@ -48,14 +48,25 @@ export default function ContactPage() {
           <button className="btn-primary" type="submit">Route Inquiry</button>
         </form>
 
-        <div className="card">
-          <h2 className="font-display text-2xl">Routing Outcome</h2>
-          <p className="mt-3 text-sm text-[var(--text-soft)]">
-            This frontend demo classifies contact flow into backend service queues. In production this maps to Contact & Inquiry Service endpoints.
-          </p>
-          <p className="mt-6 rounded-xl border border-[var(--line)] bg-[var(--panel)] p-4 text-sm">
-            {result ? `Inquiry routed to: ${result}` : "Submit a message to see intake routing."}
-          </p>
+        <div className="space-y-6">
+          <div className="card">
+            <h2 className="font-display text-2xl">Quick Contact</h2>
+            <div className="mt-4 space-y-2 text-sm text-[var(--text-soft)]">
+              <p>tuancreations.africa@gmail.com</p>
+              <p>+256 753 414 058</p>
+              <p>Kampala, Uganda</p>
+            </div>
+          </div>
+
+          <div className="card">
+            <h2 className="font-display text-2xl">Routing Outcome</h2>
+            <p className="mt-3 text-sm text-[var(--text-soft)]">
+              This frontend demo classifies contact flow into backend service queues. In production this maps to Contact & Inquiry Service endpoints.
+            </p>
+            <p className="mt-6 rounded-xl border border-[var(--line)] bg-[var(--panel)] p-4 text-sm">
+              {result ? `Inquiry routed to: ${result}` : "Submit a message to see intake routing."}
+            </p>
+          </div>
         </div>
       </div>
     </div>

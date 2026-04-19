@@ -16,7 +16,7 @@ export default function PublicLayout() {
       <header className="sticky top-0 z-40 backdrop-blur-md bg-[color:rgba(8,17,29,0.78)] border-b border-[var(--line)]">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <Link to="/" className="font-display text-xl tracking-wide text-[var(--gold)]">
-            TUAN Digital
+            TUAN Creations Company LTD
           </Link>
 
           <nav className="hidden gap-2 md:flex">
@@ -48,9 +48,14 @@ export default function PublicLayout() {
       </main>
 
       <footer className="mt-16 border-t border-[var(--line)] bg-[color:rgba(7,14,24,0.9)]">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-10 text-sm text-[var(--text-soft)] sm:px-6 lg:px-8 md:flex-row md:items-center md:justify-between">
-          <p>TUAN Digital - Unified African digital infrastructure.</p>
-          <p>Copyright 2026 TUAN Creations Company Ltd</p>
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 px-4 py-10 text-sm text-[var(--text-soft)] sm:px-6 lg:grid-cols-3 lg:px-8">
+          <p>TUAN Digital Platform - Unified African digital infrastructure.</p>
+          <div className="space-y-1">
+            <p>tuancreations.africa@gmail.com</p>
+            <p>+256 753 414 058</p>
+            <p>Kampala, Uganda</p>
+          </div>
+          <p className="lg:text-right">Copyright 2026 TUAN Creations Company Ltd</p>
         </div>
       </footer>
     </div>

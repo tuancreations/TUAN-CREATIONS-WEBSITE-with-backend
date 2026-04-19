@@ -13,15 +13,21 @@ const moduleNav = [
 export default function DashboardLayout() {
   const { user, logout } = useAuth();
   const location = useLocation();
+  const isGuest = !user;
 
   return (
     <div className="min-h-screen bg-[var(--surface)] text-[var(--text)]">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[250px_1fr] lg:px-8">
         <aside className="h-fit rounded-3xl border border-[var(--line)] bg-[var(--card)] p-5">
           <Link to="/dashboard" className="font-display text-lg text-[var(--gold)]">
-            TUAN Digital
+            TUAN Creations Company LTD
           </Link>
-          <p className="mt-2 text-sm text-[var(--text-soft)]">{user?.name} ({user?.role})</p>
+          <p className="mt-2 text-sm text-[var(--text-soft)]">
+            {isGuest ? "Guest access" : `${user?.name} (${user?.role})`}
+          </p>
+          <p className="mt-2 text-xs text-[var(--text-soft)]">
+            Anonymous users can browse all dashboards. Sign in or sign up to save selections, submit requests, and keep your activity tied to a verified identity.
+          </p>
 
           <nav className="mt-6 flex flex-col gap-2">
             {moduleNav.map((item) => (
@@ -41,18 +47,39 @@ export default function DashboardLayout() {
             ))}
           </nav>
 
-          <button className="mt-6 w-full rounded-xl border border-[var(--line)] px-3 py-2 text-sm text-[var(--text-soft)] hover:bg-[var(--panel)]" onClick={logout}>
-            Sign out
-          </button>
+          {isGuest ? (
+            <div className="mt-6 space-y-3">
+              <Link className="btn-primary block w-full text-center text-sm" to="/auth">
+                Sign in / Sign up
+              </Link>
+              <Link className="btn-ghost block w-full text-center text-sm" to="/auth">
+                Choose a service
+              </Link>
+            </div>
+          ) : (
+            <button className="mt-6 w-full rounded-xl border border-[var(--line)] px-3 py-2 text-sm text-[var(--text-soft)] hover:bg-[var(--panel)]" onClick={logout}>
+              Sign out
+            </button>
+          )}
         </aside>
 
         <section className="rounded-3xl border border-[var(--line)] bg-[var(--panel)] p-4 sm:p-6 lg:p-8">
           <div className="mb-6 flex items-center justify-between border-b border-[var(--line)] pb-4">
             <h1 className="font-display text-2xl">{moduleNav.find((i) => i.to === location.pathname)?.label ?? "Module"}</h1>
-            <Link className="text-sm text-[var(--gold)] hover:underline" to="/">
-              Public Site
-            </Link>
+            <div className="flex items-center gap-3">
+              <Link className="text-sm text-[var(--gold)] hover:underline" to="/">
+                Public Site
+              </Link>
+              <Link className="text-sm text-[var(--gold)] hover:underline" to="/auth">
+                Login / Signup
+              </Link>
+            </div>
           </div>
+          {isGuest && (
+            <div className="mb-6 rounded-2xl border border-[color:rgba(220,173,75,0.35)] bg-[color:rgba(220,173,75,0.08)] p-4 text-sm text-[var(--text-soft)]">
+              You are browsing as a guest. Login or signup when you are ready to choose a service, save progress, or submit a request.
+            </div>
+          )}
           <Outlet />
         </section>
       </div>

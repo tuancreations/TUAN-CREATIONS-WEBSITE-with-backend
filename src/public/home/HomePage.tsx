@@ -1,24 +1,24 @@
 import { Link } from "react-router-dom";
 
 const discovery = [
-  { title: "Explore Vision", to: "/about", description: "Understand why TUAN exists and what it is building." },
-  { title: "Explore System", to: "/divisions", description: "View all modules and how they integrate under one identity layer." },
-  { title: "Start Learning", to: "/academy", description: "Browse courses and join live academy experiences." },
-  { title: "Watch TUAN TV", to: "/media", description: "Access live programs and recorded channels." },
-  { title: "Hire Services", to: "/marketplace", description: "Find verified providers for products and delivery." },
-  { title: "Join Ecosystem", to: "/auth", description: "Create a role-based identity and unlock your dashboard." },
+  { title: "Explore Vision", to: "/about", description: "See the problem TUAN Digital solves and why the platform matters now." },
+  { title: "Explore System", to: "/divisions", description: "View the public and protected layers of the platform architecture." },
+  { title: "Start Learning", to: "/academy", description: "Access verified live academy lessons, partner classes, and recordings." },
+  { title: "Watch TUAN TV", to: "/media", description: "Stream educational broadcasts, partner promotions, and recorded channels." },
+  { title: "Hire Services", to: "/marketplace", description: "Find vetted freelancers, agencies, and digital service providers." },
+  { title: "Join Ecosystem", to: "/auth", description: "Create a role-based identity and unlock the shared partner dashboard." },
 ];
 
 export default function HomePage() {
   return (
     <div>
       <section className="mx-auto max-w-7xl px-4 pb-20 pt-16 sm:px-6 lg:px-8">
-        <p className="eyebrow">Africa's Digital Operating System</p>
+        <p className="eyebrow">TUAN Digital Platform</p>
         <h1 className="mt-5 max-w-4xl font-display text-5xl leading-tight sm:text-6xl">
-          One connected platform for learning, commerce, media, collaboration, and innovation.
+          One trusted platform for skills, services, media, innovation, and collaboration.
         </h1>
         <p className="mt-6 max-w-3xl text-lg text-[var(--text-soft)]">
-          TUAN Digital is not a collection of tools. It is a unified identity-driven ecosystem where every action compounds value across the continent.
+          TUAN Digital unifies Africa's fragmented digital ecosystem into one locally guided, affordable, and verified environment.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link className="btn-primary" to="/auth">Enter Protected Ecosystem</Link>
@@ -33,6 +33,38 @@ export default function HomePage() {
             <p className="mt-2 text-sm text-[var(--text-soft)]">{item.description}</p>
           </Link>
         ))}
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+        <div className="card">
+          <p className="eyebrow">Core Components</p>
+          <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div>
+              <h3 className="font-display text-xl">Software & ICT Services</h3>
+              <p className="mt-2 text-sm text-[var(--text-soft)]">Accessible tools and digital support for individuals, SMEs, creators, and institutions.</p>
+            </div>
+            <div>
+              <h3 className="font-display text-xl">TUAN Live Academy</h3>
+              <p className="mt-2 text-sm text-[var(--text-soft)]">Verified live courses and recordings hosted on the instructor or broadcaster page.</p>
+            </div>
+            <div>
+              <h3 className="font-display text-xl">TUAN Marketplace</h3>
+              <p className="mt-2 text-sm text-[var(--text-soft)]">A vetted space for products, services, startups, and agencies with verified identities.</p>
+            </div>
+            <div>
+              <h3 className="font-display text-xl">Collaboration Tools</h3>
+              <p className="mt-2 text-sm text-[var(--text-soft)]">Project, messaging, and team tools for small groups and community organisations.</p>
+            </div>
+            <div>
+              <h3 className="font-display text-xl">TUAN TV</h3>
+              <p className="mt-2 text-sm text-[var(--text-soft)]">Education, innovation showcases, partner promotions, and recorded broadcasts.</p>
+            </div>
+            <div>
+              <h3 className="font-display text-xl">IoT & Robotics Hub</h3>
+              <p className="mt-2 text-sm text-[var(--text-soft)]">Practical resources, learning kits, and innovation content for young builders and schools.</p>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   );
