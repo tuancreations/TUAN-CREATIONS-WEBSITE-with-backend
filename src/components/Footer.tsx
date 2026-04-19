@@ -13,11 +13,10 @@ const Footer = memo(() => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2 flex flex-col items-start">
-            <span className="logo-oval-shell mb-4 h-20">
+            <span className="logo-container mb-4 h-20">
               <img
                 src="/tuan-logo.png"
                 alt="TUAN Creations Company Ltd Logo"
-                className="logo-oval-shell-img"
               />
             </span>
             <p className="text-gray-800 mb-4 max-w-md">

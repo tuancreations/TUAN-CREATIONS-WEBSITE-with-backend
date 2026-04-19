@@ -140,31 +140,22 @@ body {
   outline-offset: 1px;
 }
 
-.logo-oval-shell {
+.logo-container {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  aspect-ratio: 2.4 / 1;
-  background: #ffffff;
-  border: 2px solid rgba(0, 0, 0, 0.08);
-  border-radius: 9999px;
+  width: 400px;
+  height: 250px;
   overflow: hidden;
-  padding: 2px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
-  isolation: isolate;
-  transform: scale(1.08);
-  transform-origin: center;
+  border-radius: 50% / 40%;
+  background: transparent;
 }
 
-.logo-oval-shell-img {
-  display: block;
-  height: 100%;
-  width: 100%;
-  max-width: none;
-  object-fit: contain;
-  transform: scale(1.08);
-  transform-origin: center;
+.logo-container img {
+  width: 110%;
+  height: auto;
+  object-fit: cover;
 }
 
 @keyframes float-glow {

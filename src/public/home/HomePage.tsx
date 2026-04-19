@@ -14,11 +14,10 @@ export default function HomePage() {
     <div>
       <section className="mx-auto max-w-7xl px-4 pb-20 pt-16 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
-          <span className="logo-oval-shell h-24">
+          <span className="logo-container h-24">
             <img
               src="/tuan-logo.png"
               alt="TUAN Creations Company Ltd Logo"
-              className="logo-oval-shell-img"
             />
           </span>
           <p className="eyebrow">TUAN Digital Platform</p>

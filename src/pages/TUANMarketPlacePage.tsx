@@ -64,8 +64,8 @@ const TUANMarketPlacePage: React.FC = () => {
             className="bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden"
           >
             <div className="bg-gray-50 p-6 flex items-center justify-center">
-              <span className="logo-oval-shell h-24">
-                <img src={company.image} alt={company.name} className="logo-oval-shell-img" />
+              <span className="logo-container h-24">
+                <img src={company.image} alt={company.name} />
               </span>
             </div>
             <div className="p-6">

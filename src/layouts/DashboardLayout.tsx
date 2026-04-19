@@ -2,7 +2,7 @@ import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../store/auth";
 
 const moduleNav = [
-  { to: "/dashboard", label: "Platform Home" },
+  { to: "/dashboard", label: "Dashboard" },
   { to: "/academy", label: "Academy" },
   { to: "/marketplace", label: "Marketplace" },
   { to: "/media", label: "Media" },
@@ -20,8 +20,8 @@ export default function DashboardLayout() {
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[250px_1fr] lg:px-8">
         <aside className="h-fit rounded-3xl border border-[var(--line)] bg-[var(--card)] p-5">
           <Link to="/dashboard" className="flex items-center gap-3 text-[var(--gold)]">
-            <span className="logo-oval-shell h-12">
-              <img src="/tuan-logo.png" alt="TUAN Creations Company Ltd Logo" className="logo-oval-shell-img" />
+            <span className="logo-container h-12">
+              <img src="/tuan-logo.png" alt="TUAN Creations Company Ltd Logo" />
             </span>
             <span className="font-display text-lg">TUAN Creations Company Ltd</span>
           </Link>
@@ -68,7 +68,7 @@ export default function DashboardLayout() {
 
         <section className="rounded-3xl border border-[var(--line)] bg-[var(--panel)] p-4 sm:p-6 lg:p-8">
           <div className="mb-6 flex items-center justify-between border-b border-[var(--line)] pb-4">
-            <h1 className="font-display text-2xl">{moduleNav.find((i) => i.to === location.pathname)?.label ?? "Platform Home"}</h1>
+            <h1 className="font-display text-2xl">{moduleNav.find((i) => i.to === location.pathname)?.label ?? "Dashboard"}</h1>
             <div className="flex items-center gap-3">
               <Link className="text-sm text-[var(--gold)] hover:underline" to="/">
                 Public Site
