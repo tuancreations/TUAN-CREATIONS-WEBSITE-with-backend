@@ -145,12 +145,12 @@ body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background: #050505;
-  border: 2px solid #f5c518;
+  background: #ffffff;
+  border: 2px solid rgba(0, 0, 0, 0.08);
   border-radius: 9999px;
   overflow: hidden;
   padding: 3px 14px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
   isolation: isolate;
   transform: scale(1.08);
   transform-origin: center;
