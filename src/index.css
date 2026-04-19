@@ -145,11 +145,12 @@ body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  aspect-ratio: 2.4 / 1;
   background: #ffffff;
   border: 2px solid rgba(0, 0, 0, 0.08);
   border-radius: 9999px;
   overflow: hidden;
-  padding: 3px 14px;
+  padding: 2px;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
   isolation: isolate;
   transform: scale(1.08);
@@ -159,10 +160,10 @@ body {
 .logo-oval-shell-img {
   display: block;
   height: 100%;
-  width: auto;
+  width: 100%;
   max-width: none;
-  object-fit: cover;
-  transform: scale(1.16);
+  object-fit: contain;
+  transform: scale(1.08);
   transform-origin: center;
 }
 

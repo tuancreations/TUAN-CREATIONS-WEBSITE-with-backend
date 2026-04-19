@@ -64,17 +64,9 @@ const TUANMarketPlacePage: React.FC = () => {
             className="bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden"
           >
             <div className="bg-gray-50 p-6 flex items-center justify-center">
-              {company.image === "/tuan-logo.png" ? (
-                <span className="logo-oval-shell h-24">
-                  <img src={company.image} alt={company.name} className="logo-oval-shell-img" />
-                </span>
-              ) : (
-                <img
-                  src={company.image}
-                  alt={company.name}
-                  className="h-20 w-auto object-contain"
-                />
-              )}
+              <span className="logo-oval-shell h-24">
+                <img src={company.image} alt={company.name} className="logo-oval-shell-img" />
+              </span>
             </div>
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-900">
