@@ -20,14 +20,14 @@ export default function DashboardLayout() {
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[250px_1fr] lg:px-8">
         <aside className="h-fit rounded-3xl border border-[var(--line)] bg-[var(--card)] p-5">
           <Link to="/dashboard" className="flex items-center gap-3 text-[var(--gold)]">
-            <img src="/tuan-logo.svg" alt="TUAN Creations Company LTD Logo" className="h-10 w-auto rounded-md bg-white/90 p-1" />
+            <img src="/tuan-logo.svg" alt="TUAN Creations Company LTD Logo" className="h-10 w-auto" />
             <span className="font-display text-lg">TUAN Creations Company LTD</span>
           </Link>
           <p className="mt-2 text-sm text-[var(--text-soft)]">
             {isGuest ? "Guest access" : `${user?.name} (${user?.role})`}
           </p>
           <p className="mt-2 text-xs text-[var(--text-soft)]">
-            Anonymous users can browse all dashboards. Sign in or sign up to save selections, submit requests, and keep your activity tied to a verified identity.
+            You can browse all dashboards as a guest. Sign in or sign up to save your choices, submit requests, and manage your activity.
           </p>
 
           <nav className="mt-6 flex flex-col gap-2">
@@ -66,7 +66,7 @@ export default function DashboardLayout() {
 
         <section className="rounded-3xl border border-[var(--line)] bg-[var(--panel)] p-4 sm:p-6 lg:p-8">
           <div className="mb-6 flex items-center justify-between border-b border-[var(--line)] pb-4">
-            <h1 className="font-display text-2xl">{moduleNav.find((i) => i.to === location.pathname)?.label ?? "Module"}</h1>
+            <h1 className="font-display text-2xl">{moduleNav.find((i) => i.to === location.pathname)?.label ?? "Dashboard"}</h1>
             <div className="flex items-center gap-3">
               <Link className="text-sm text-[var(--gold)] hover:underline" to="/">
                 Public Site
@@ -78,7 +78,7 @@ export default function DashboardLayout() {
           </div>
           {isGuest && (
             <div className="mb-6 rounded-2xl border border-[color:rgba(220,173,75,0.35)] bg-[color:rgba(220,173,75,0.08)] p-4 text-sm text-[var(--text-soft)]">
-              You are browsing as a guest. Login or signup when you are ready to choose a service, save progress, or submit a request.
+              You are browsing as a guest. Log in or sign up when you are ready to choose a service, save progress, or submit a request.
             </div>
           )}
           <Outlet />

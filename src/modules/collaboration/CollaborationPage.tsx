@@ -27,7 +27,7 @@ export default function CollaborationPage() {
             <h3 className="font-display text-xl">{project.name}</h3>
             <p className="mt-2 text-sm text-[var(--text-soft)]">Team size: {project.team}</p>
             <p className="mt-2 text-sm text-[var(--gold)]">Status: {project.status}</p>
-            <p className="mt-1 text-xs text-[var(--text-soft)]">Supports project, communication, and delivery workflows</p>
+            <p className="mt-1 text-xs text-[var(--text-soft)]">Helps your team plan, communicate, and deliver work smoothly</p>
             <div className="mt-4 flex gap-2">
               <button className="btn-ghost text-xs">Open Chat</button>
               <button className="btn-ghost text-xs">Manage Tasks</button>

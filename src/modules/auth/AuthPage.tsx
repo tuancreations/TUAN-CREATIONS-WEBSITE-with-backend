@@ -23,10 +23,10 @@ export default function AuthPage() {
   return (
     <div className="mx-auto grid min-h-[80vh] w-full max-w-6xl grid-cols-1 gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8">
       <div>
-        <p className="eyebrow">Protected Ecosystem</p>
+        <p className="eyebrow">Welcome</p>
         <h1 className="mt-4 font-display text-5xl leading-tight">Identity unlocks the full TUAN Digital Platform.</h1>
         <p className="mt-5 max-w-xl text-[var(--text-soft)]">
-          Sign in to access your role-based dashboard, verification status, and workflows across academy,
+          Sign in to access your role-based dashboard, verification status, and services across academy,
           marketplace, media, collaboration, and innovation programs.
         </p>
       </div>
@@ -55,7 +55,7 @@ export default function AuthPage() {
         </label>
 
         <div className="rounded-xl border border-[var(--line)] bg-[var(--panel)] p-4 text-sm text-[var(--text-soft)]">
-          Student, Partner, Client, and Investor identities unlock the shared partner dashboard system used across the platform.
+          Student, Partner, Client, and Investor accounts give you the right tools and features for your journey on TUAN Digital.
         </div>
 
         <button className="btn-primary w-full" type="submit">

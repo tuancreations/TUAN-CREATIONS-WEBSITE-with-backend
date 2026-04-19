@@ -45,7 +45,7 @@ export default function ContactPage() {
             </select>
           </label>
           <label className="field-label">Message<textarea className="field-input min-h-24" value={message} onChange={(e) => setMessage(e.target.value)} required /></label>
-          <button className="btn-primary" type="submit">Route Inquiry</button>
+          <button className="btn-primary" type="submit">Send Inquiry</button>
         </form>
 
         <div className="space-y-6">
@@ -59,12 +59,12 @@ export default function ContactPage() {
           </div>
 
           <div className="card">
-            <h2 className="font-display text-2xl">Routing Outcome</h2>
+            <h2 className="font-display text-2xl">Next Step</h2>
             <p className="mt-3 text-sm text-[var(--text-soft)]">
-              This frontend demo classifies contact flow into backend service queues. In production this maps to Contact & Inquiry Service endpoints.
+              Thank you for reaching out. Your message is directed to the right TUAN support team so we can respond quickly.
             </p>
             <p className="mt-6 rounded-xl border border-[var(--line)] bg-[var(--panel)] p-4 text-sm">
-              {result ? `Inquiry routed to: ${result}` : "Submit a message to see intake routing."}
+              {result ? `Your inquiry has been sent to: ${result}` : "Submit your message to see who will handle it."}
             </p>
           </div>
         </div>

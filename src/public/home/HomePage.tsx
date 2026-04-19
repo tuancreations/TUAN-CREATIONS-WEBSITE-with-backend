@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const discovery = [
   { title: "Explore Vision", to: "/about", description: "See the problem TUAN Digital solves and why the platform matters now." },
-  { title: "Explore System", to: "/divisions", description: "View the public and protected layers of the platform architecture." },
+  { title: "Explore Services", to: "/divisions", description: "See everything TUAN Digital offers for learning, services, media, and innovation." },
   { title: "Start Learning", to: "/academy", description: "Access verified live academy lessons, partner classes, and recordings." },
   { title: "Watch TUAN TV", to: "/media", description: "Stream educational broadcasts, partner promotions, and recorded channels." },
   { title: "Hire Services", to: "/marketplace", description: "Find vetted freelancers, agencies, and digital service providers." },
@@ -21,7 +21,7 @@ export default function HomePage() {
           TUAN Digital unifies Africa's fragmented digital ecosystem into one locally guided, affordable, and verified environment.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
-          <Link className="btn-primary" to="/auth">Enter Protected Ecosystem</Link>
+          <Link className="btn-primary" to="/auth">Create Your Account</Link>
           <Link className="btn-ghost" to="/blog">Read Ecosystem Stories</Link>
         </div>
       </section>

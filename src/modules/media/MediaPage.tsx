@@ -21,7 +21,7 @@ export default function MediaPage() {
         <div className="aspect-video rounded-2xl border border-[var(--line)] bg-gradient-to-br from-[var(--panel)] to-[color:rgba(220,173,75,0.12)] p-6">
           <p className="text-sm text-[var(--text-soft)]">Live broadcast zone</p>
           <h3 className="mt-2 font-display text-2xl">Africa Tech Frontlines</h3>
-          <p className="mt-3 max-w-lg text-sm text-[var(--text-soft)]">Replace this container with your streaming provider embed to enable real broadcasts and archived recordings on the broadcaster page.</p>
+          <p className="mt-3 max-w-lg text-sm text-[var(--text-soft)]">Live programs appear here, and every broadcast is saved on the broadcaster page for easy replay.</p>
         </div>
       </div>
 

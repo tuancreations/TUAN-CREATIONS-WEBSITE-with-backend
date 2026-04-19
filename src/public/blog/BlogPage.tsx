@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const posts = [
   {
     title: "From Discovery to Transaction: How Identity Changes Platform Economics",
-    excerpt: "How TUAN links trust, onboarding, and monetization across modules.",
+    excerpt: "How TUAN connects trust, onboarding, and income opportunities in one place.",
   },
   {
     title: "Live Learning as a Growth Engine for Marketplace Demand",

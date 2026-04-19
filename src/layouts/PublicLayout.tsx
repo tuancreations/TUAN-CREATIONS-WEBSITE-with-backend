@@ -16,7 +16,7 @@ export default function PublicLayout() {
       <header className="sticky top-0 z-40 backdrop-blur-md bg-[color:rgba(8,17,29,0.78)] border-b border-[var(--line)]">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <Link to="/" className="flex items-center gap-3 text-[var(--gold)]">
-            <img src="/tuan-logo.svg" alt="TUAN Creations Company LTD Logo" className="h-10 w-auto rounded-md bg-white/90 p-1" />
+            <img src="/tuan-logo.svg" alt="TUAN Creations Company LTD Logo" className="h-10 w-auto" />
             <span className="font-display text-xl tracking-wide">TUAN Creations Company LTD</span>
           </Link>
 
