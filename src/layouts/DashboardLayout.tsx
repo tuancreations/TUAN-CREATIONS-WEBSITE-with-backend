@@ -81,9 +81,9 @@ export default function DashboardLayout() {
         </aside>
 
         <section className="rounded-3xl border border-[var(--line)] bg-[var(--panel)] p-4 sm:p-6 lg:p-8">
-          <div className="mb-6 flex items-center justify-between border-b border-[var(--line)] pb-4">
+          <div className="mb-6 flex flex-col gap-3 border-b border-[var(--line)] pb-4 sm:flex-row sm:items-center sm:justify-between">
             <h1 className="font-display text-2xl">{navItems.find((i) => i.to === location.pathname)?.label ?? "Dashboard"}</h1>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <Link className="text-sm text-[var(--gold)] hover:underline" to="/">
                 Public Site
               </Link>

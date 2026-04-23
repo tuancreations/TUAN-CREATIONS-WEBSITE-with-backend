@@ -23,7 +23,7 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <p className="eyebrow">About TUAN</p>
-      <h1 className="mt-4 max-w-3xl font-display text-5xl">Building a trusted digital platform for growth and opportunity.</h1>
+      <h1 className="mt-4 max-w-3xl font-display text-3xl leading-tight sm:text-5xl">Building a trusted digital platform for growth and opportunity.</h1>
       <p className="mt-6 max-w-4xl text-[var(--text-soft)]">
         TUAN Creations Company Ltd builds and operates TUAN Digital Platform so clients can access trusted services, students can learn practical skills, investors can monitor growth, and partners can scale with confidence.
       </p>
@@ -38,7 +38,7 @@ export default function AboutPage() {
       </div>
 
       <div className="mt-10 card">
-        <h2 className="font-display text-3xl">Why People Choose TUAN Digital</h2>
+        <h2 className="font-display text-2xl sm:text-3xl">Why People Choose TUAN Digital</h2>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           <p className="text-sm text-[var(--text-soft)]">One connected journey from learning to hiring, media exposure, and project delivery.</p>
           <p className="text-sm text-[var(--text-soft)]">Verified profiles and clear trust signals that help users choose with confidence.</p>
@@ -48,7 +48,7 @@ export default function AboutPage() {
       </div>
 
       <div className="mt-10 card">
-        <h2 className="font-display text-3xl">Unified Revenue Model</h2>
+        <h2 className="font-display text-2xl sm:text-3xl">Unified Revenue Model</h2>
         <ul className="mt-4 space-y-3 text-sm text-[var(--text-soft)]">
           {revenuePillars.map((item) => (
             <li key={item}>{item}</li>
