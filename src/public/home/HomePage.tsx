@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 const discovery = [
   { title: "Explore Our Vision", to: "/about", description: "Understand what TUAN is building and how it creates value for communities and businesses." },
-  { title: "Explore Divisions", to: "/divisions", description: "See the full range of services from software and telecom to media, academy, and innovation." },
-  { title: "Start Learning", to: "/academy", description: "Join live classes, learn from trusted instructors, and replay lessons anytime." },
-  { title: "Watch TUAN TV", to: "/media", description: "Follow live programs, partner channels, and recorded shows in one place." },
-  { title: "Hire Trusted Partners", to: "/marketplace", description: "Choose verified ICT companies and freelancers for your next project." },
+  { title: "Explore Divisions", to: "/divisions", description: "See the full range of services from software and telecom to TUAN Live, TUAN Academy, and TUAN Innovations Hub." },
+  { title: "TUAN Academy", to: "/academy", description: "Join live classes, learn from trusted instructors, and replay lessons anytime." },
+  { title: "TUAN Live", to: "/media", description: "Follow live programs, partner channels, and recorded shows in one place." },
+  { title: "TUAN Marketplace", to: "/marketplace", description: "Choose verified ICT companies and freelancers for your next project." },
   { title: "Join as Student, Client, Partner, or Investor", to: "/auth", description: "Create your account and access services tailored to your role." },
 ];
 
@@ -25,8 +25,8 @@ export default function HomePage() {
             <p className="mt-1 text-xs text-[var(--text-soft)]">[The United African Nation - "All-in-One Digital Space"]</p>
           </div>
         </div>
-        <h1 className="mt-5 max-w-4xl font-display text-5xl leading-tight sm:text-6xl">
-          One trusted place for learning, business services, media, innovation, and partnerships.
+        <h1 className="mt-5 max-w-4xl font-display text-xl leading-tight sm:text-2xl">
+          — "Trusted all-in-one Digital platform for building ICT skills, providing ICT services, shared media, innovation hubs, and connecting partnerships." —
         </h1>
         <p className="mt-6 max-w-3xl text-lg text-[var(--text-soft)]">
           TUAN Digital is a product of TUAN Creations Company Ltd, designed to help clients, students, investors, and partners connect, grow, and succeed with confidence.
@@ -55,7 +55,7 @@ export default function HomePage() {
               <p className="mt-2 text-sm text-[var(--text-soft)]">Practical digital services for businesses, institutions, and organizations ready to scale.</p>
             </div>
             <div>
-              <h3 className="font-display text-xl">TUAN Live Academy</h3>
+              <h3 className="font-display text-xl">TUAN Academy</h3>
               <p className="mt-2 text-sm text-[var(--text-soft)]">Trusted learning paths for students and professionals, with live sessions and replays.</p>
             </div>
             <div>
@@ -63,15 +63,15 @@ export default function HomePage() {
               <p className="mt-2 text-sm text-[var(--text-soft)]">A verified space where clients can find reliable freelancers, firms, and digital solutions.</p>
             </div>
             <div>
-              <h3 className="font-display text-xl">Collaboration Tools</h3>
+              <h3 className="font-display text-xl">TUAN Collaborations Hub</h3>
               <p className="mt-2 text-sm text-[var(--text-soft)]">Simple teamwork tools for project updates, communication, and shared delivery.</p>
             </div>
             <div>
-              <h3 className="font-display text-xl">TUAN TV</h3>
+              <h3 className="font-display text-xl">TUAN Live</h3>
               <p className="mt-2 text-sm text-[var(--text-soft)]">Media that educates, promotes partner work, and keeps communities informed.</p>
             </div>
             <div>
-              <h3 className="font-display text-xl">TUAN Innovations</h3>
+              <h3 className="font-display text-xl">TUAN Innovations Hub</h3>
               <p className="mt-2 text-sm text-[var(--text-soft)]">Hands-on innovation tracks in IoT, robotics, and chip design for future-ready builders.</p>
             </div>
           </div>

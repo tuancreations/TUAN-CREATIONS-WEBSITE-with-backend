@@ -19,7 +19,7 @@ export default function BlogPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <p className="eyebrow">Blog</p>
-      <h1 className="mt-4 font-display text-3xl leading-tight sm:text-5xl">Stories, insights, and practical ideas for our community.</h1>
+      <h1 className="mt-4 font-display text-2xl leading-tight sm:text-3xl">Stories, insights, and practical ideas for our community.</h1>
 
       <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (

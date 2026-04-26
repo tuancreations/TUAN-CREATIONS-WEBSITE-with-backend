@@ -23,7 +23,7 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <p className="eyebrow">About TUAN</p>
-      <h1 className="mt-4 max-w-3xl font-display text-3xl leading-tight sm:text-5xl">Building a trusted digital platform for growth and opportunity.</h1>
+      <h1 className="mt-4 max-w-3xl font-display text-2xl leading-tight sm:text-3xl">Building a trusted digital platform for growth and opportunity.</h1>
       <p className="mt-6 max-w-4xl text-[var(--text-soft)]">
         TUAN Creations Company Ltd builds and operates TUAN Digital Platform so clients can access trusted services, students can learn practical skills, investors can monitor growth, and partners can scale with confidence.
       </p>

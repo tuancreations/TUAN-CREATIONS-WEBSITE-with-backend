@@ -40,7 +40,7 @@ export default function AuthPage() {
     <div className="mx-auto grid min-h-[80vh] w-full max-w-6xl grid-cols-1 gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8">
       <div>
         <p className="eyebrow">Welcome</p>
-        <h1 className="mt-4 max-w-xl font-display text-3xl leading-tight sm:text-4xl lg:text-5xl">Identity unlocks the full TUAN Digital Platform.</h1>
+        <h1 className="mt-4 max-w-xl font-display text-2xl leading-tight sm:text-3xl lg:text-4xl">Identity unlocks the full TUAN Digital Platform.</h1>
         <p className="mt-5 max-w-xl text-[var(--text-soft)]">
           Sign in to access your role-based platform space, verification status, and services across academy,
           marketplace, media, collaboration, and innovation programs.

@@ -26,6 +26,7 @@ export const dashboardMetrics: Metric[] = [
   { label: "Active Learners", value: "12,480", trend: "+18% this month" },
   { label: "Marketplace Orders", value: "3,920", trend: "+11% this month" },
   { label: "Live Media Reach", value: "84K", trend: "+22% this month" },
+  { label: "Project Collaborations", value: "3", trend: "+2 this month" },
   { label: "Innovation Programs", value: "46", trend: "+9% this month" },
 ];
 

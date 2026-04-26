@@ -63,7 +63,7 @@ export default function AdminPage() {
   if (user.role !== "admin") {
     return (
       <div className="card space-y-3">
-        <h2 className="font-display text-3xl">Admin access required</h2>
+        <h2 className="font-display text-2xl">Admin access required</h2>
         <p className="text-sm text-[var(--text-soft)]">
           Your account does not have permission to open the admin dashboard.
         </p>
@@ -75,7 +75,7 @@ export default function AdminPage() {
     <div className="space-y-6">
       <div className="card">
         <p className="text-sm text-[var(--text-soft)]">Admin console</p>
-        <h2 className="mt-2 font-display text-3xl">Platform operations dashboard</h2>
+        <h2 className="mt-2 font-display text-2xl">Platform operations dashboard</h2>
         <p className="mt-3 text-sm text-[var(--text-soft)]">
           Track users, activity, catalog health, and platform engagement from a single control panel.
         </p>
@@ -105,7 +105,7 @@ export default function AdminPage() {
             ].map((item) => (
               <article key={item.label} className="card">
                 <p className="text-xs uppercase tracking-wide text-[var(--text-soft)]">{item.label}</p>
-                <p className="mt-3 font-display text-3xl text-[var(--gold)]">{item.value}</p>
+                <p className="mt-3 font-display text-2xl text-[var(--gold)]">{item.value}</p>
               </article>
             ))}
           </div>

@@ -1,52 +1,142 @@
-# TUAN Creations Frontend (Netlify Ready)
+# TUAN Digital Platform
 
-This repository snapshot is frontend-only and can run on Netlify without the backend folder.
+A modular full-stack web application for public discovery, member access, and role-based platform services.
 
-## Stack
+This README is intentionally sanitized and does not contain secrets, credentials, private contact details, or deployment tokens.
 
-- React 18 + TypeScript + Vite
-- React Router
-- Tailwind CSS + custom CSS
+## Tech Stack
 
-## Run Locally
+- Frontend: React, TypeScript, Vite, React Router, Tailwind CSS
+- Backend: Node.js, Express, Mongoose, JWT auth
+- Database: MongoDB
 
-1. Install dependencies:
+## Project Structure
+
+- Frontend app: [src](src)
+- Backend API: [backend/src](backend/src)
+- Backend domain routes: [backend/src/domains](backend/src/domains)
+- Shared backend auth helpers: [backend/src/shared](backend/src/shared)
+
+## Core Features
+
+- Public pages (home, about, divisions, blog, contact)
+- Member authentication and role-based access
+- Admin authentication and admin-only dashboard access
+- Dashboard insights with direct links to corresponding modules
+- Academy, marketplace, media, collaboration, and innovation modules
+- API fallback mode for frontend usability when backend is unavailable
+
+## Local Development
+
+### 1. Install frontend dependencies
 
 ```bash
 npm install
 ```
 
-2. Start development server:
+### 2. Install backend dependencies
+
+```bash
+cd backend
+npm install
+```
+
+### 3. Configure environment variables
+
+Create a backend environment file at [backend/.env](backend/.env) with your own values.
+
+Required variable names:
+
+- PORT
+- CLIENT_ORIGIN
+- JWT_SECRET
+- MONGODB_URI
+- ADMIN_EMAIL
+- ADMIN_PASSWORD
+
+Optional Atlas-style variables supported by backend config:
+
+- ATLAS_USER
+- ATLAS_PASSWORD
+- ATLAS_CLUSTER
+- ATLAS_DB
+- ATLAS_APP_NAME
+
+### 4. Run backend
+
+```bash
+cd backend
+npm run dev
+```
+
+### 5. Run frontend
 
 ```bash
 npm run dev
 ```
 
-3. Build production bundle:
+## Build
 
 ```bash
 npm run build
 ```
 
-## Netlify Deployment
+## User Flow Chart
 
-- Build command: `npm run build`
-- Publish directory: `dist`
-- SPA routing: already configured via `netlify.toml` and `public/_redirects`
+```mermaid
+flowchart TD
+		A[Visitor arrives on Public Site] --> B{Sign in?}
+		B -->|No| C[Browse Public Pages]
+		C --> D[Open Auth Page]
+		B -->|Yes| E[Member or Admin Auth]
 
-## Frontend-Only Behavior
+		E --> F{Role}
+		F -->|Admin| G[Admin Dashboard]
+		F -->|Student/Partner/Client/Investor| H[User Dashboard]
 
-- `src/services/api.ts` includes fallback logic.
-- If backend APIs are unavailable, the app uses local/mock data for browsing flows.
-- Auth and action flows gracefully fall back to local session behavior, so the UI remains usable on Netlify without backend services.
+		H --> I[Dashboard Insights]
+		I --> I1[Academy]
+		I --> I2[Marketplace]
+		I --> I3[Media]
+		I --> I4[Collaboration]
+		I --> I5[Innovations]
 
-## Main App Areas
+		I4 --> J[Create/Track Collaboration Projects]
+		I1 --> K[Enroll and Join Live Sessions]
+		I2 --> L[Order/Track/Review Listings]
+		I3 --> M[Follow Channels and View Broadcasts]
+		I5 --> N[Enroll in Innovation Programs]
 
-- Public site: Home, About, Divisions, Blog/News, Contact
-- Platform modules: Dashboard, Academy, Live Session, Marketplace, Media, Collaboration, Innovations
-- Auth pages: Member login and Admin login
+		G --> O[View Users, Actions, Enrollment Insights]
 
-## Notes
+		subgraph Data Layer
+			P[(MongoDB)]
+		end
 
-- Optional backend integration can be added later by setting `VITE_API_BASE_URL`.
-- This README intentionally excludes backend credentials and server setup.
+		J --> P
+		K --> P
+		L --> P
+		M --> P
+		N --> P
+		O --> P
+```
+
+## Architecture Notes
+
+- Backend is modularized by domain route registration in [backend/src/server.js](backend/src/server.js).
+- Domain route files live in [backend/src/domains](backend/src/domains).
+- Shared auth logic lives in [backend/src/shared/auth.js](backend/src/shared/auth.js).
+- Frontend service layer with fallback behavior lives in [src/services/api.ts](src/services/api.ts).
+
+## Security and Privacy Notes
+
+- Do not commit real credentials to source control.
+- Keep all secrets in environment variables.
+- Rotate admin credentials and JWT secrets regularly.
+- Restrict database network access to approved environments only.
+
+## Deployment Notes
+
+- Frontend can be deployed as a static SPA.
+- Backend should be deployed as a separate service with environment-based configuration.
+- Ensure frontend API base URL points to your deployed backend environment.

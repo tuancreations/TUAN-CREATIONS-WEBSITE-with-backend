@@ -56,7 +56,7 @@ export default function DivisionsPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <p className="eyebrow">Divisions</p>
-      <h1 className="mt-4 font-display text-3xl leading-tight sm:text-5xl">Our innovation divisions work together under one trusted platform.</h1>
+      <h1 className="mt-4 font-display text-2xl leading-tight sm:text-3xl">Our innovation divisions work together under one trusted platform.</h1>
       <p className="mt-6 max-w-3xl text-[var(--text-soft)]">
         TUAN Creations Company Ltd leads these divisions, while TUAN Digital Platform connects their services in one user journey.
       </p>
@@ -97,7 +97,7 @@ export default function DivisionsPage() {
 
       <section className="mt-20">
         <div className="mb-12 text-center sm:mb-16">
-          <h2 className="mb-5 text-2xl font-bold text-[var(--text)] sm:mb-6 sm:text-4xl">How the company and platform work together</h2>
+          <h2 className="mb-5 text-2xl font-bold text-[var(--text)] sm:mb-6 sm:text-3xl">How the company and platform work together</h2>
           <p className="mx-auto max-w-3xl text-[var(--text-soft)]">
             TUAN Creations Company Ltd owns and governs the divisions. TUAN Digital Platform is the product layer that presents these services to users in one trusted flow.
           </p>

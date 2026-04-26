@@ -16,6 +16,20 @@ import CollaborationPage from "./modules/collaboration/CollaborationPage";
 import IotPage from "./modules/iot/IotPage";
 import AdminPage from "./modules/admin/AdminPage";
 import LiveSessionPage from "./pages/LiveSessionPage";
+import { useAuth } from "./store/auth";
+
+function AdminRoute({ children }: { children: JSX.Element }) {
+  const { user } = useAuth();
+  if (!user) {
+    return <Navigate to="/admin/login" replace />;
+  }
+
+  if (user.role !== "admin") {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return children;
+}
 
 export default function App() {
   return (
@@ -38,7 +52,14 @@ export default function App() {
         <Route path="/media" element={<MediaPage />} />
         <Route path="/collaboration" element={<CollaborationPage />} />
         <Route path="/iot" element={<IotPage />} />
-        <Route path="/admin" element={<AdminPage />} />
+        <Route
+          path="/admin"
+          element={(
+            <AdminRoute>
+              <AdminPage />
+            </AdminRoute>
+          )}
+        />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

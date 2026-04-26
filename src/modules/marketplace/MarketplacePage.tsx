@@ -29,7 +29,7 @@ export default function MarketplacePage() {
   return (
     <div className="space-y-6">
       <div className="card">
-        <h2 className="font-display text-3xl">TUAN Marketplace</h2>
+        <h2 className="font-display text-2xl">TUAN Marketplace</h2>
         <p className="mt-2 text-sm text-[var(--text-soft)]">
           Discover trusted providers, compare offers clearly, and place orders with confidence.
         </p>

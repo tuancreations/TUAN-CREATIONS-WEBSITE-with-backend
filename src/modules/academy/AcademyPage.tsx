@@ -75,7 +75,7 @@ export default function AcademyPage() {
   return (
     <div className="space-y-6">
       <div className="card">
-        <h2 className="font-display text-3xl">TUAN Live Academy</h2>
+        <h2 className="font-display text-2xl">TUAN Academy</h2>
         <p className="mt-2 text-sm text-[var(--text-soft)]">
           Choose trusted courses, join live sessions, and learn at your own pace with replay access.
         </p>

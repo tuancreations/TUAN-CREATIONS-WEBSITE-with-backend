@@ -29,7 +29,7 @@ export default function ContactPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <p className="eyebrow">Contact</p>
-      <h1 className="mt-4 font-display text-3xl leading-tight sm:text-5xl">Talk to us about support, partnerships, and service requests.</h1>
+      <h1 className="mt-4 font-display text-2xl leading-tight sm:text-3xl">Talk to us about support, partnerships, and service requests.</h1>
 
       <div className="mt-10 grid gap-8 lg:grid-cols-2">
         <form onSubmit={onSubmit} className="card space-y-4">

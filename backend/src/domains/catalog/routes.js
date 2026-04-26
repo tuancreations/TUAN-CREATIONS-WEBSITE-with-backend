@@ -1,7 +1,28 @@
-export const registerCatalogRoutes = (app, { Metric, Course, Listing, LiveSession }) => {
+export const registerCatalogRoutes = (app, { Metric, Course, Listing, LiveSession, Project }) => {
   app.get("/api/dashboard/metrics", async (_req, res) => {
-    const metrics = await Metric.find().sort({ order: 1 }).lean();
-    return res.json({ metrics });
+    const [metrics, projectCount] = await Promise.all([
+      Metric.find().sort({ order: 1 }).lean(),
+      Project.countDocuments(),
+    ]);
+
+    const hasProjectMetric = metrics.some((entry) => entry.label === "Project Collaborations");
+    const nextMetrics = hasProjectMetric
+      ? metrics.map((entry) =>
+          entry.label === "Project Collaborations"
+            ? { ...entry, value: projectCount.toLocaleString(), trend: "+2 this month" }
+            : entry
+        )
+      : [
+          ...metrics,
+          {
+            label: "Project Collaborations",
+            value: projectCount.toLocaleString(),
+            trend: "+2 this month",
+            order: 4,
+          },
+        ].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
+    return res.json({ metrics: nextMetrics });
   });
 
   app.get("/api/courses", async (_req, res) => {

@@ -1,42 +1,35 @@
-import React, { useState, useCallback, useEffect, memo } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import {
-  Menu,
-  X,
-  Globe,
-  Users,
-  BookOpen,
-  Mail,
-  ShoppingBag,
-  Tv
-} from "lucide-react";
-import { theme } from "../bright-gold/theme"; // 🎨 Import Bright Gold Theme
+import { BookOpen, Globe, Mail, Menu, ShoppingBag, Tv, Users, X, Lightbulb, Handshake } from "lucide-react";
+import { theme } from "../bright-gold/theme";
 
-const Header: React.FC = memo(() => {
+const navigation = [
+  { name: "Home", href: "/", icon: Globe },
+  { name: "About", href: "/about", icon: Users },
+  { name: "Divisions", href: "/divisions", icon: Globe },
+  { name: "Blog", href: "/blog", icon: BookOpen },
+  { name: "Contact", href: "/contact", icon: Mail },
+  { name: "TUAN Academy", href: "/academy", icon: BookOpen },
+  { name: "TUAN Marketplace", href: "/marketplace", icon: ShoppingBag },
+  { name: "TUAN Live", href: "/media", icon: Tv },
+  { name: "TUAN Innovations Hub", href: "/iot", icon: Lightbulb },
+  { name: "TUAN Collaborations Hub", href: "/collaboration", icon: Handshake },
+];
+
+const Header = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
   const toggleMenu = useCallback(() => setIsMenuOpen((prev) => !prev), []);
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
 
-  // Disable background scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "auto";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
   }, [isMenuOpen]);
 
-  const navigation = [
-    { name: "Home", href: "/", icon: Globe },
-    { name: "About", href: "/about", icon: Users },
-    { name: "Divisions / Services", href: "/divisions", icon: Globe },
-    { name: "Enrollment", href: "/enrollment", icon: Users },
-    { name: "Learning Platform", href: "/learning", icon: BookOpen },
-    { name: "TUAN MarketPlace", href: "/tuan-market-place", icon: ShoppingBag },
-    { name: "TUAN OnlineTV Live", href: "/tuan-live", icon: Tv }, // ✅ Added
-    { name: "News / Blog", href: "/news", icon: BookOpen },
-    { name: "Contact", href: "/contact", icon: Mail },
-  ];
-
-  // 🔗 Reusable NavLinks component
   const NavLinks = ({ onClick }: { onClick?: () => void }) => (
     <>
       {navigation.map(({ name, href, icon: Icon }) => {
@@ -46,13 +39,11 @@ const Header: React.FC = memo(() => {
             key={name}
             to={href}
             onClick={onClick}
-            className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-              isActive
-                ? "bg-yellow-500 text-black shadow-md"
-                : "text-gray-900 hover:bg-yellow-400 hover:text-black"
+            className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all duration-200 ${
+              isActive ? "bg-yellow-500 text-black shadow-md" : "text-gray-900 hover:bg-yellow-400 hover:text-black"
             }`}
           >
-            <Icon className="w-4 h-4" />
+            <Icon className="h-4 w-4" />
             <span>{name}</span>
           </Link>
         );
@@ -62,48 +53,38 @@ const Header: React.FC = memo(() => {
 
   return (
     <header
-      className="shadow-md sticky top-0 z-50 transition-all duration-300"
+      className="sticky top-0 z-50 shadow-md transition-all duration-300"
       style={{
         backgroundColor: theme.colors.primary,
         color: theme.colors.text,
         fontFamily: theme.typography.fontFamily,
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* 🔹 Logo Section */}
-        <div className="flex justify-between items-center py-3">
-        <div className="flex flex-col gap-3 py-3 md:flex-row md:items-center md:justify-between">
-          <Link to="/" className="flex items-center gap-2 md:mr-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-3 py-3">
+          <Link to="/" className="flex items-center gap-2" onClick={closeMenu}>
             <span className="logo-container logo-container-sm shrink-0">
-              <img
-                src="/tuan-logo.png"
-                alt="TUAN Creations Company Ltd Logo"
-              />
+              <img src="/tuan-logo.png" alt="TUAN Creations Company Ltd Logo" />
             </span>
-            <span className="text-base font-bold text-gray-900 tracking-tight sm:text-lg lg:text-2xl">
-              TUAN Creations Company Ltd
-            </span>
+            <span className="text-base font-bold tracking-tight text-gray-900 sm:text-lg lg:text-xl">TUAN Creations Company Ltd</span>
           </Link>
 
-          {/* 🔹 Desktop Navigation */}
-          <nav className="flex flex-wrap justify-center gap-2 md:justify-end">
+          <nav className="hidden flex-wrap justify-end gap-2 md:flex">
             <NavLinks />
           </nav>
 
-          {/* 🔹 Mobile Menu Toggle */}
           <button
             onClick={toggleMenu}
             aria-label="Toggle navigation menu"
-            className="self-end rounded-md p-2 transition-colors hover:bg-yellow-400 hover:text-black md:hidden"
+            className="rounded-md p-2 transition-colors hover:bg-yellow-400 hover:text-black md:hidden"
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
 
-        {/* 🔹 Mobile Dropdown Menu */}
         {isMenuOpen && (
-          <div className="md:hidden pb-4 animate-slideDown">
-            <nav className="flex flex-col space-y-2">
+          <div className="animate-slideDown pb-4 md:hidden">
+            <nav className="flex flex-col gap-2">
               <NavLinks onClick={closeMenu} />
             </nav>
           </div>
@@ -114,4 +95,5 @@ const Header: React.FC = memo(() => {
 });
 
 Header.displayName = "Header";
+
 export default Header;
