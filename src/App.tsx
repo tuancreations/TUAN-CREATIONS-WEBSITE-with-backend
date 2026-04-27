@@ -16,6 +16,7 @@ import CollaborationPage from "./modules/collaboration/CollaborationPage";
 import IotPage from "./modules/iot/IotPage";
 import AdminPage from "./modules/admin/AdminPage";
 import LiveSessionPage from "./pages/LiveSessionPage";
+import FloatingWhatsAppButton from "./components/FloatingWhatsAppButton";
 import { useAuth } from "./store/auth";
 
 function AdminRoute({ children }: { children: JSX.Element }) {
@@ -33,36 +34,39 @@ function AdminRoute({ children }: { children: JSX.Element }) {
 
 export default function App() {
   return (
-    <Routes>
-      <Route element={<PublicLayout />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/divisions" element={<DivisionsPage />} />
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/auth" element={<AuthPage />} />
-        <Route path="/admin/login" element={<AdminLoginPage />} />
-      </Route>
+    <>
+      <Routes>
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/divisions" element={<DivisionsPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/admin/login" element={<AdminLoginPage />} />
+        </Route>
 
-      <Route element={<DashboardLayout />}>
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/academy" element={<AcademyPage />} />
-        <Route path="/live-session" element={<LiveSessionPage />} />
-        <Route path="/marketplace" element={<MarketplacePage />} />
-        <Route path="/media" element={<MediaPage />} />
-        <Route path="/collaboration" element={<CollaborationPage />} />
-        <Route path="/iot" element={<IotPage />} />
-        <Route
-          path="/admin"
-          element={(
-            <AdminRoute>
-              <AdminPage />
-            </AdminRoute>
-          )}
-        />
-      </Route>
+        <Route element={<DashboardLayout />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/academy" element={<AcademyPage />} />
+          <Route path="/live-session" element={<LiveSessionPage />} />
+          <Route path="/marketplace" element={<MarketplacePage />} />
+          <Route path="/media" element={<MediaPage />} />
+          <Route path="/collaboration" element={<CollaborationPage />} />
+          <Route path="/iot" element={<IotPage />} />
+          <Route
+            path="/admin"
+            element={(
+              <AdminRoute>
+                <AdminPage />
+              </AdminRoute>
+            )}
+          />
+        </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+      <FloatingWhatsAppButton />
+    </>
   );
 }

@@ -173,6 +173,55 @@ img {
   object-fit: contain;
 }
 
+.whatsapp-fab {
+  position: fixed;
+  right: 1.15rem;
+  bottom: 1.15rem;
+  z-index: 80;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1px solid rgba(37, 211, 102, 0.55);
+  border-radius: 999px;
+  padding: 0.46rem 0.8rem 0.46rem 0.5rem;
+  color: #ecfff4;
+  text-decoration: none;
+  background: linear-gradient(135deg, rgba(18, 79, 45, 0.94), rgba(14, 148, 77, 0.94));
+  box-shadow: 0 16px 36px rgba(4, 12, 8, 0.42);
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.whatsapp-fab:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+  box-shadow: 0 20px 40px rgba(4, 12, 8, 0.52);
+}
+
+.whatsapp-fab:focus-visible {
+  outline: 2px solid rgba(97, 255, 158, 0.95);
+  outline-offset: 2px;
+}
+
+.whatsapp-fab__badge {
+  width: 1.85rem;
+  height: 1.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 0.73rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #07361b;
+  background: linear-gradient(145deg, #78ffc1, #2ad06f);
+}
+
+.whatsapp-fab__label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
 @keyframes float-glow {
   0%,
   100% {
@@ -199,5 +248,15 @@ img {
   .btn-ghost {
     padding: 0.58rem 0.95rem;
     font-size: 0.92rem;
+  }
+
+  .whatsapp-fab {
+    right: 0.85rem;
+    bottom: 0.85rem;
+    padding-right: 0.68rem;
+  }
+
+  .whatsapp-fab__label {
+    font-size: 0.82rem;
   }
 }
