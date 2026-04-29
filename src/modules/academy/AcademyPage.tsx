@@ -75,13 +75,25 @@ export default function AcademyPage() {
   return (
     <div className="space-y-6">
       <div className="card">
-        <h2 className="font-display text-2xl">TUAN Academy</h2>
-        <p className="mt-2 text-sm text-[var(--text-soft)]">
-          Choose trusted courses, join live sessions, and learn at your own pace with replay access.
-        </p>
-        <p className="mt-3 text-sm text-[var(--text-soft)]">
-          Whether a class is hosted by TUAN or a partner, every session is recorded so students can revisit key lessons.
-        </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="font-display text-2xl">TUAN Academy</h2>
+            <p className="mt-2 text-sm text-[var(--text-soft)]">
+              Choose trusted courses, join live sessions, and learn at your own pace with replay access.
+            </p>
+            <p className="mt-3 text-sm text-[var(--text-soft)]">
+              Whether a class is hosted by TUAN or a partner, every session is recorded so students can revisit key lessons.
+            </p>
+          </div>
+          {user && (
+            <Link
+              to="/academy/my-courses"
+              className="btn-ghost text-sm whitespace-nowrap"
+            >
+              My Courses →
+            </Link>
+          )}
+        </div>
         {message && <p className="mt-3 text-sm text-emerald-300">{message}</p>}
       </div>
 
@@ -94,7 +106,7 @@ export default function AcademyPage() {
             <p className="mt-1 text-sm text-[var(--text-soft)]">Duration: {course.duration}</p>
             <p className="mt-1 text-sm text-[var(--text-soft)]">Enrolled: {course.enrolled.toLocaleString()}</p>
             <p className="mt-1 text-sm text-[var(--text-soft)]">Recording: Saved on host broadcaster page</p>
-            <div className="mt-4 flex gap-2">
+            <div className="mt-4 flex flex-col gap-2">
               <button
                 className="btn-primary text-xs disabled:opacity-60"
                 onClick={() => handleEnroll(course.id)}
@@ -102,8 +114,16 @@ export default function AcademyPage() {
               >
                 {enrolledCourseIds.includes(course.id) ? "Enrolled" : activeCourseId === course.id ? "Processing..." : "Enroll"}
               </button>
+              <Link
+                to={`/course/${course.id}`}
+                className="btn-ghost text-xs text-center"
+              >
+                View Details
+              </Link>
+            </div>
+            <div className="mt-3 space-y-1">
               <button
-                className="btn-ghost text-xs disabled:opacity-60"
+                className="btn-ghost text-xs w-full disabled:opacity-60"
                 onClick={() => handleJoinLive(course.id)}
                 disabled={activeCourseId === course.id || !enrolledCourseIds.includes(course.id)}
               >

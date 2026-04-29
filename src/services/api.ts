@@ -18,11 +18,74 @@ export type DashboardMetric = {
 
 export type Course = {
   id: number;
+  instructorId?: string;
   title: string;
   instructor: string;
   level: "Beginner" | "Intermediate" | "Advanced";
   duration: string;
   enrolled: number;
+  content?: {
+    description?: string;
+    syllabus?: string;
+    prerequisites?: string[];
+    learningObjectives?: string[];
+    thumbnail?: string;
+  };
+};
+
+export type CourseContent = {
+  description: string;
+  syllabus: string;
+  prerequisites: string[];
+  learningObjectives: string[];
+  thumbnail?: string;
+};
+
+export type ProgressData = {
+  lessonsCompleted: number;
+  videoWatched: number;
+  totalLessons: number;
+  quizScore: number;
+  progressPercentage: number;
+  completedAt: string | null;
+};
+
+export type Recording = {
+  _id?: string;
+  courseId: number;
+  courseTitle: string;
+  sessionTopic: string;
+  instructor: string;
+  recordingUrl: string;
+  duration: number;
+  recordedAt: string;
+  videoProvider: string;
+  thumbnailUrl?: string | null;
+};
+
+export type Certificate = {
+  _id?: string;
+  userId: string;
+  courseId: number;
+  courseTitle: string;
+  instructor: string;
+  issuedAt: string;
+  certificateUrl: string;
+  certificateNumber: string;
+};
+
+export type AcademyEnrollment = {
+  id: string;
+  userId: string;
+  userName: string | null;
+  userEmail: string | null;
+  courseId: number;
+  courseTitle: string | null;
+  enrolledAt: string;
+  liveJoinCount: number;
+  lastJoinedLiveAt: string | null;
+  progress?: ProgressData;
+  certificateId?: string | null;
 };
 
 export type Listing = {
@@ -101,21 +164,152 @@ export type AdminOverview = {
   }>;
 };
 
-export type AcademyEnrollment = {
-  id: string;
-  userId: string;
-  userName: string | null;
-  userEmail: string | null;
+// ===== TIER 2 TYPES =====
+
+export type ForumThread = {
+  _id?: string;
   courseId: number;
-  courseTitle: string | null;
+  authorId?: string;
+  authorName: string;
+  title: string;
+  content: string;
+  replies: number;
+  views: number;
+  isPinned: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type ForumReply = {
+  _id?: string;
+  threadId?: string;
+  authorId?: string;
+  authorName: string;
+  content: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type Notification = {
+  _id?: string;
+  userId?: string;
+  type: "enrollment" | "session_reminder" | "recording_ready" | "completion" | "announcement";
+  title: string;
+  message: string;
+  courseId?: number | null;
+  isRead: boolean;
+  readAt?: string | null;
+  createdAt?: string;
+};
+
+export type SessionRecord = {
+  _id?: string;
+  courseId: number;
+  instructorId?: string;
+  title: string;
+  topic: string;
+  startedAt: string;
+  endedAt?: string | null;
+  recordingUrl?: string | null;
+  totalAttendees: number;
+  createdAt?: string;
+};
+
+export type StudentProgress = {
+  id: string;
+  studentId: string;
+  studentName: string;
+  studentEmail: string;
+  courseId: number;
+  courseTitle: string;
   enrolledAt: string;
-  liveJoinCount: number;
-  lastJoinedLiveAt: string | null;
+  progress?: ProgressData;
+};
+
+export type QuizQuestion = {
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explanation?: string;
+};
+
+export type Quiz = {
+  _id?: string;
+  courseId: number;
+  title: string;
+  description?: string;
+  questions: QuizQuestion[];
+  passingScore: number;
+  timeLimit: number;
+  attempts: number;
+  isPublished: boolean;
+};
+
+export type QuizResult = {
+  _id?: string;
+  userId: string;
+  quizId: string;
+  courseId: number;
+  answers: Array<{ questionId: number; selectedAnswer: number; isCorrect: boolean }>;
+  score: number;
+  percentageScore: number;
+  passed: boolean;
+  attemptNumber: number;
+  timeSpent: number;
+  createdAt?: string;
+};
+
+export type StudyGroup = {
+  _id?: string;
+  courseId: number;
+  name: string;
+  description: string;
+  topic?: string;
+  createdBy?: { name: string; email: string } | string;
+  members: string[];
+  maxMembers: number;
+  isActive: boolean;
+  createdAt?: string;
+};
+
+export type MentorshipPairing = {
+  _id?: string;
+  courseId: number;
+  mentorId: string | { name: string; email: string };
+  menteeId: string | { name: string; email: string };
+  mentorName: string;
+  menteeName: string;
+  status: "pending" | "active" | "completed";
+  startDate: string;
+  endDate?: string | null;
+  goals: string;
+  isActive: boolean;
+};
+
+export type AnalyticsData = {
+  totalCourses: number;
+  totalEnrollments: number;
+  totalUsers: number;
+  totalCertificates: number;
+  totalQuizAttempts: number;
+  coursesData: Course[];
+  completionRates: Array<{ _id: number; completed: number; total: number; completionRate: number }>;
 };
 
 const AUTH_KEY = "tuan_os_auth_session";
 const DEFAULT_API_BASE = "http://localhost:4000/api";
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE).replace(/\/$/, "");
+
+export const getApiBaseUrl = () => (import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE).replace(/\/$/, "");
+
+export const getApiOrigin = () => {
+  try {
+    return new URL(getApiBaseUrl()).origin;
+  } catch {
+    return "http://localhost:4000";
+  }
+};
+
+const API_BASE = getApiBaseUrl();
 
 const createId = () =>
   typeof crypto !== "undefined" && "randomUUID" in crypto
@@ -529,5 +723,333 @@ export async function getAdminAcademyEnrollments() {
     return response.enrollments;
   } catch {
     return [];
+  }
+}
+
+export async function getCourseFull(courseId: number) {
+  try {
+    const response = await apiRequest<{ course: Course }>(`/academy/courses/${courseId}`);
+    return response.course;
+  } catch {
+    const courses = await getCourses();
+    return courses.find((c) => c.id === courseId) ?? null;
+  }
+}
+
+export async function updateEnrollmentProgress(enrollmentId: string, progress: Partial<ProgressData>) {
+  try {
+    return await apiRequest<{ ok: boolean; enrollment: AcademyEnrollment }>(`/academy/enrollments/${enrollmentId}/progress`, {
+      method: "POST",
+      body: JSON.stringify(progress),
+    });
+  } catch {
+    return { ok: false, enrollment: null };
+  }
+}
+
+export async function getMyProgress() {
+  try {
+    const response = await apiRequest<{ enrollments: Array<{ courseId: number; progress: ProgressData }> }>("/academy/enrollments/me/progress");
+    return response.enrollments;
+  } catch {
+    return [];
+  }
+}
+
+export async function getCourseRecordings(courseId: number) {
+  try {
+    const response = await apiRequest<{ recordings: Recording[] }>(`/academy/courses/${courseId}/recordings`);
+    return response.recordings;
+  } catch {
+    return [];
+  }
+}
+
+export async function completeCourse(courseId: number) {
+  try {
+    return await apiRequest<{ ok: boolean; certificate: Certificate; enrollment: AcademyEnrollment }>(`/academy/courses/${courseId}/complete-course`, {
+      method: "POST",
+    });
+  } catch {
+    return { ok: false, certificate: null, enrollment: null };
+  }
+}
+
+export async function getMyCertificates() {
+  try {
+    const response = await apiRequest<{ certificates: Certificate[] }>("/academy/certificates/me");
+    return response.certificates;
+  } catch {
+    return [];
+  }
+}
+
+export async function getQuizzes(courseId: number) {
+  try {
+    const response = await apiRequest<{ quizzes: Quiz[] }>(`/academy/courses/${courseId}/quizzes`);
+    return response.quizzes;
+  } catch {
+    return [];
+  }
+}
+
+export async function getQuiz(quizId: string) {
+  try {
+    const response = await apiRequest<{ quiz: Quiz }>(`/academy/quizzes/${quizId}`);
+    return response.quiz;
+  } catch {
+    return null;
+  }
+}
+
+export async function submitQuizAnswers(quizId: string, answers: Array<{ questionId: number; selectedAnswer: number }>, timeSpent = 0) {
+  try {
+    const response = await apiRequest<{ result: QuizResult }>(`/academy/quizzes/${quizId}/submit`, {
+      method: "POST",
+      body: JSON.stringify({ answers, timeSpent }),
+    });
+    return response.result;
+  } catch {
+    return null;
+  }
+}
+
+export async function getQuizResults(quizId: string) {
+  try {
+    const response = await apiRequest<{ results: QuizResult[] }>(`/academy/quizzes/${quizId}/results`);
+    return response.results;
+  } catch {
+    return [];
+  }
+}
+
+export async function getStudyGroups(courseId: number) {
+  try {
+    const response = await apiRequest<{ groups: StudyGroup[] }>(`/academy/courses/${courseId}/study-groups`);
+    return response.groups;
+  } catch {
+    return [];
+  }
+}
+
+export async function createStudyGroup(courseId: number, payload: { name: string; description?: string; topic?: string; maxMembers?: number }) {
+  try {
+    const response = await apiRequest<{ group: StudyGroup }>(`/academy/courses/${courseId}/study-groups`, {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+    return response.group;
+  } catch {
+    return null;
+  }
+}
+
+export async function joinStudyGroup(groupId: string) {
+  try {
+    const response = await apiRequest<{ group: StudyGroup }>(`/academy/study-groups/${groupId}/join`, {
+      method: "POST",
+    });
+    return response.group;
+  } catch {
+    return null;
+  }
+}
+
+export async function requestMentor(courseId: number, payload: { mentorId: string; goals?: string }) {
+  try {
+    const response = await apiRequest<{ pairing: MentorshipPairing }>(`/academy/courses/${courseId}/mentorship-request`, {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+    return response.pairing;
+  } catch {
+    return null;
+  }
+}
+
+export async function getMentorshipPairings() {
+  try {
+    const response = await apiRequest<{ pairings: MentorshipPairing[] }>("/academy/mentorship/me");
+    return response.pairings;
+  } catch {
+    return [];
+  }
+}
+
+export async function acceptMentorship(pairingId: string) {
+  try {
+    const response = await apiRequest<{ pairing: MentorshipPairing }>(`/academy/mentorship/${pairingId}/accept`, {
+      method: "PUT",
+    });
+    return response.pairing;
+  } catch {
+    return null;
+  }
+}
+
+export async function getAcademyAnalytics() {
+  try {
+    const response = await apiRequest<{ analytics: AnalyticsData }>("/admin/academy/analytics");
+    return response.analytics;
+  } catch {
+    return {
+      totalCourses: 0,
+      totalEnrollments: 0,
+      totalUsers: 0,
+      totalCertificates: 0,
+      totalQuizAttempts: 0,
+      coursesData: [],
+      completionRates: [],
+    };
+  }
+}
+
+// ===== TIER 2: COURSE MANAGEMENT =====
+
+export async function getCoursesList(filters?: { level?: string; instructor?: string; search?: string }) {
+  try {
+    const params = new URLSearchParams();
+    if (filters?.level) params.set("level", filters.level);
+    if (filters?.instructor) params.set("instructor", filters.instructor);
+    if (filters?.search) params.set("search", filters.search);
+
+    const response = await apiRequest<{ courses: Course[] }>(`/academy/courses?${params}`);
+    return response.courses;
+  } catch {
+    return fallbackCourses;
+  }
+}
+
+export async function createCourse(courseData: {
+  title: string;
+  level: string;
+  duration: string;
+  description?: string;
+  syllabus?: string;
+  prerequisites?: string[];
+  learningObjectives?: string[];
+}) {
+  try {
+    const response = await apiRequest<{ course: Course }>("/academy/courses", {
+      method: "POST",
+      body: JSON.stringify(courseData),
+    });
+    return { ok: true, course: response.course };
+  } catch (error) {
+    return { ok: false, course: null, error: (error as Error).message };
+  }
+}
+
+export async function updateCourse(courseId: number, courseData: Partial<Course>) {
+  try {
+    const response = await apiRequest<{ course: Course }>(`/academy/courses/${courseId}`, {
+      method: "PUT",
+      body: JSON.stringify(courseData),
+    });
+    return { ok: true, course: response.course };
+  } catch (error) {
+    return { ok: false, course: null, error: (error as Error).message };
+  }
+}
+
+export async function deleteCourse(courseId: number) {
+  try {
+    await apiRequest<{ message: string }>(`/academy/courses/${courseId}`, { method: "DELETE" });
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, error: (error as Error).message };
+  }
+}
+
+// ===== TIER 2: INSTRUCTOR DASHBOARD =====
+
+export async function getInstructorCourses() {
+  try {
+    const response = await apiRequest<{ courses: Course[] }>("/academy/instructor/courses");
+    return response.courses;
+  } catch {
+    return [];
+  }
+}
+
+export async function getInstructorStudents() {
+  try {
+    const response = await apiRequest<{ students: StudentProgress[] }>("/academy/instructor/students");
+    return response.students;
+  } catch {
+    return [];
+  }
+}
+
+export async function getInstructorSessions() {
+  try {
+    const response = await apiRequest<{ sessions: SessionRecord[] }>("/academy/instructor/sessions");
+    return response.sessions;
+  } catch {
+    return [];
+  }
+}
+
+// ===== TIER 2: NOTIFICATIONS =====
+
+export async function getNotifications() {
+  try {
+    const response = await apiRequest<{ notifications: Notification[]; unreadCount: number }>("/notifications");
+    return response;
+  } catch {
+    return { notifications: [], unreadCount: 0 };
+  }
+}
+
+export async function markNotificationAsRead(notificationId: string) {
+  try {
+    const response = await apiRequest<{ notification: Notification }>(`/notifications/${notificationId}`, { method: "PUT" });
+    return response.notification;
+  } catch {
+    return null;
+  }
+}
+
+// ===== TIER 2: FORUMS =====
+
+export async function getForumThreads(courseId: number) {
+  try {
+    const response = await apiRequest<{ threads: ForumThread[] }>(`/academy/courses/${courseId}/forum`);
+    return response.threads;
+  } catch {
+    return [];
+  }
+}
+
+export async function createForumThread(courseId: number, threadData: { title: string; content: string }) {
+  try {
+    const response = await apiRequest<{ thread: ForumThread }>(`/academy/courses/${courseId}/forum`, {
+      method: "POST",
+      body: JSON.stringify(threadData),
+    });
+    return { ok: true, thread: response.thread };
+  } catch (error) {
+    return { ok: false, thread: null, error: (error as Error).message };
+  }
+}
+
+export async function getForumThread(threadId: string) {
+  try {
+    const response = await apiRequest<{ thread: ForumThread; replies: ForumReply[] }>(`/academy/forums/${threadId}`);
+    return response;
+  } catch {
+    return { thread: null, replies: [] };
+  }
+}
+
+export async function addForumReply(threadId: string, replyData: { content: string }) {
+  try {
+    const response = await apiRequest<{ reply: ForumReply }>(`/academy/forums/${threadId}/reply`, {
+      method: "POST",
+      body: JSON.stringify(replyData),
+    });
+    return { ok: true, reply: response.reply };
+  } catch (error) {
+    return { ok: false, reply: null, error: (error as Error).message };
   }
 }

@@ -1,7 +1,8 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Globe, Mail, Menu, ShoppingBag, Tv, Users, X, Lightbulb, Handshake } from "lucide-react";
+import { BookOpen, Globe, Mail, Menu, ShoppingBag, Tv, Users, X, Lightbulb, Handshake, Bell, BarChart3, GraduationCap } from "lucide-react";
 import { theme } from "../bright-gold/theme";
+import { useAuth } from "../store/auth";
 
 const navigation = [
   { name: "Home", href: "/", icon: Globe },
@@ -19,6 +20,7 @@ const navigation = [
 const Header = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { user } = useAuth();
 
   const toggleMenu = useCallback(() => setIsMenuOpen((prev) => !prev), []);
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
@@ -48,6 +50,62 @@ const Header = memo(() => {
           </Link>
         );
       })}
+      {user && (
+        <>
+          <Link
+            to="/notifications"
+            onClick={onClick}
+            className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all duration-200 ${
+              location.pathname === "/notifications"
+                ? "bg-yellow-500 text-black shadow-md"
+                : "text-gray-900 hover:bg-yellow-400 hover:text-black"
+            }`}
+          >
+            <Bell className="h-4 w-4" />
+            <span>Notifications</span>
+          </Link>
+          <Link
+            to="/academy/mentorship"
+            onClick={onClick}
+            className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all duration-200 ${
+              location.pathname === "/academy/mentorship"
+                ? "bg-yellow-500 text-black shadow-md"
+                : "text-gray-900 hover:bg-yellow-400 hover:text-black"
+            }`}
+          >
+            <GraduationCap className="h-4 w-4" />
+            <span>Mentorship</span>
+          </Link>
+          {(user.role === "instructor" || user.role === "admin") && (
+            <Link
+              to="/instructor-dashboard"
+              onClick={onClick}
+              className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all duration-200 ${
+                location.pathname === "/instructor-dashboard"
+                  ? "bg-yellow-500 text-black shadow-md"
+                  : "text-gray-900 hover:bg-yellow-400 hover:text-black"
+              }`}
+            >
+              <BarChart3 className="h-4 w-4" />
+              <span>Instructor</span>
+            </Link>
+          )}
+          {user.role === "admin" && (
+            <Link
+              to="/admin/academy/analytics"
+              onClick={onClick}
+              className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all duration-200 ${
+                location.pathname === "/admin/academy/analytics"
+                  ? "bg-yellow-500 text-black shadow-md"
+                  : "text-gray-900 hover:bg-yellow-400 hover:text-black"
+              }`}
+            >
+              <BarChart3 className="h-4 w-4" />
+              <span>Analytics</span>
+            </Link>
+          )}
+        </>
+      )}
     </>
   );
 

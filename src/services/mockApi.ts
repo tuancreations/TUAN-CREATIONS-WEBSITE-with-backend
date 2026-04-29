@@ -11,6 +11,13 @@ export type Course = {
   level: "Beginner" | "Intermediate" | "Advanced";
   duration: string;
   enrolled: number;
+  content?: {
+    description?: string;
+    syllabus?: string;
+    prerequisites?: string[];
+    learningObjectives?: string[];
+    thumbnail?: string;
+  };
 };
 
 export type Listing = {
@@ -38,6 +45,12 @@ export const courses: Course[] = [
     level: "Advanced",
     duration: "10 weeks",
     enrolled: 1280,
+    content: {
+      description: "Learn to design AI-powered products tailored for African market contexts, including low-bandwidth environments and diverse user needs.",
+      syllabus: "Week 1-2: AI Fundamentals for Product Teams\nWeek 3-4: Market Research & User Research in Africa\nWeek 5-6: Prototyping AI Features\nWeek 7-8: Localization & Multilingual Support\nWeek 9-10: Launch Strategy & Scaling",
+      prerequisites: ["Basic understanding of AI concepts", "Product design fundamentals"],
+      learningObjectives: ["Design culturally-adapted AI products", "Understand African market dynamics", "Build inclusive AI systems", "Navigate ethical considerations"],
+    },
   },
   {
     id: 2,
@@ -46,6 +59,12 @@ export const courses: Course[] = [
     level: "Intermediate",
     duration: "8 weeks",
     enrolled: 990,
+    content: {
+      description: "Master cloud security best practices, identity management, and compliance frameworks for AWS, GCP, and Azure environments.",
+      syllabus: "Week 1: Cloud Security Fundamentals\nWeek 2-3: Identity & Access Management\nWeek 4: Network Security & Encryption\nWeek 5-6: Compliance & Governance\nWeek 7-8: Incident Response & Monitoring",
+      prerequisites: ["Basic cloud computing knowledge", "Networking fundamentals"],
+      learningObjectives: ["Implement secure cloud architectures", "Manage identity & access", "Handle compliance requirements", "Monitor and respond to incidents"],
+    },
   },
   {
     id: 3,
@@ -54,6 +73,12 @@ export const courses: Course[] = [
     level: "Beginner",
     duration: "6 weeks",
     enrolled: 760,
+    content: {
+      description: "Build and deploy IoT solutions for smart farming, including soil sensors, weather monitoring, and automated irrigation systems.",
+      syllabus: "Week 1-2: IoT & Hardware Basics\nWeek 3: Sensor Integration & Data Collection\nWeek 4: Cloud Connectivity & APIs\nWeek 5: Dashboard Development\nWeek 6: Deployment & Maintenance",
+      prerequisites: ["Basic electronics", "Introduction to programming"],
+      learningObjectives: ["Build IoT sensor systems", "Integrate hardware with cloud", "Develop monitoring dashboards", "Deploy production solutions"],
+    },
   },
 ];
 

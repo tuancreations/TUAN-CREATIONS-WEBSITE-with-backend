@@ -3,7 +3,8 @@ import { useSearchParams } from "react-router-dom";
 import Select from "react-select";
 import countryList from "react-select-country-list";
 import { Globe, X } from "lucide-react";
-import { getCourses, getLiveSession, joinLiveSession, recordAction, type Course } from "../services/api";
+import { io, type Socket } from "socket.io-client";
+import { getApiOrigin, getCourses, getLiveSession, getStoredToken, joinLiveSession, recordAction, type Course, type SessionMeta } from "../services/api";
 import { useAuth } from "../store/auth";
 
 type Role = "instructor" | "co-instructor" | "student" | "admin";
@@ -23,19 +24,6 @@ type ChatMessage = {
   text: string;
   time: string;
   isInstructor?: boolean;
-};
-
-type SessionMeta = {
-  id: string;
-  title: string;
-  instructor: string;
-  topic?: string;
-  startTime?: string | null;
-  durationMinutes?: number;
-  status: "scheduled" | "live" | "ended";
-  recordingUrl?: string | null;
-  resources?: { title: string; url: string }[];
-  previousSessions?: { title: string; recordingUrl: string }[];
 };
 
 const nowFormatted = () =>
@@ -64,6 +52,7 @@ export default function LiveSessionPage() {
   const [participants, setParticipants] = useState<User[]>([]);
 
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  const socketRef = useRef<Socket | null>(null);
 
   const [newMessage, setNewMessage] = useState("");
   const chatEndRef = useRef<HTMLDivElement | null>(null);
@@ -74,6 +63,9 @@ export default function LiveSessionPage() {
   const [isRecording, setIsRecording] = useState(false);
 
   const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
+  const [isRealtimeConnected, setIsRealtimeConnected] = useState(false);
+  const [usersTyping, setUsersTyping] = useState<Set<string>>(new Set());
+  const typingTimeoutRef = useRef<Map<string, NodeJS.Timeout>>(new Map());
 
   // ----- Notification subscription -----
   const [email, setEmail] = useState("");
@@ -181,6 +173,132 @@ export default function LiveSessionPage() {
   }, [selectedCourse, session]);
 
   useEffect(() => {
+    const token = getStoredToken();
+    const courseId = Number.isNaN(selectedCourseId) ? selectedCourse?.id : selectedCourseId;
+
+    if (!session || !courseId) {
+      return;
+    }
+
+    // Socket.IO requires authentication in production
+    if (!token) {
+      console.warn("[Socket] No auth token available - socket features disabled");
+      showToast("error", "Please sign in to use real-time chat features");
+      return;
+    }
+
+    const socket = io(getApiOrigin(), {
+      transports: ["websocket"],
+      auth: { token },
+      reconnection: true,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+      reconnectionAttempts: 5,
+    });
+
+    socketRef.current = socket;
+
+    const mergeRoomState = (nextSession: SessionMeta) => {
+      setSession((current) => ({
+        ...(current ?? nextSession),
+        ...nextSession,
+      }));
+      setParticipants(nextSession.participants ?? []);
+      setChatMessages(nextSession.chatMessages ?? []);
+    };
+
+    socket.on("connect", () => {
+      console.log("[Socket] Connected with ID:", socket.id);
+      setIsRealtimeConnected(true);
+      socket.emit("live:join", { courseId });
+    });
+
+    socket.on("live:room-state", (nextSession: SessionMeta) => {
+      mergeRoomState(nextSession);
+    });
+
+    socket.on("live:participant-joined", (participant: User) => {
+      setParticipants((current) => {
+        const next = current.filter((entry) => entry.id !== participant.id);
+        return [...next, participant];
+      });
+    });
+
+    socket.on("live:participant-left", ({ userId }: { userId: string }) => {
+      setParticipants((current) => current.filter((entry) => entry.id !== userId));
+    });
+
+    socket.on("live:participants", (nextParticipants: User[]) => {
+      setParticipants(nextParticipants);
+    });
+
+    socket.on("live:chat-message", (message: ChatMessage) => {
+      setChatMessages((current) => {
+        if (current.some((entry) => entry.id === message.id)) {
+          return current;
+        }
+        return [...current, message];
+      });
+    });
+
+    socket.on("live:user-typing", ({ userId, userName, isTyping }: { userId: string; userName: string; isTyping: boolean }) => {
+      setUsersTyping((current) => {
+        const next = new Set(current);
+        if (isTyping) {
+          next.add(userId);
+        } else {
+          next.delete(userId);
+        }
+        return next;
+      });
+
+      // Clear typing timeout
+      const existingTimeout = typingTimeoutRef.current.get(userId);
+      if (existingTimeout) clearTimeout(existingTimeout);
+
+      // Auto-clear typing indicator after 3 seconds if not updated
+      if (isTyping) {
+        const timeout = setTimeout(() => {
+          setUsersTyping((current) => {
+            const next = new Set(current);
+            next.delete(userId);
+            return next;
+          });
+        }, 3000);
+        typingTimeoutRef.current.set(userId, timeout);
+      }
+    });
+
+    socket.on("disconnect", () => {
+      setIsRealtimeConnected(false);
+      console.warn("[Socket] Disconnected");
+    });
+
+    socket.on("connect_error", (error) => {
+      setIsRealtimeConnected(false);
+      console.error("[Socket] Connection error:", error);
+      if (error.message === "Authentication required") {
+        showToast("error", "Authentication required for real-time features");
+      } else {
+        showToast("error", "Connection error. Attempting to reconnect...");
+      }
+    });
+
+    socket.on("live:error", ({ message }: { message: string }) => {
+      console.error("[Socket] Server error:", message);
+      showToast("error", message);
+    });
+
+    return () => {
+      socket.disconnect();
+      socketRef.current = null;
+      setIsRealtimeConnected(false);
+      typingTimeoutRef.current.forEach((timeout) => clearTimeout(timeout));
+      typingTimeoutRef.current.clear();
+    };
+  }, [selectedCourse?.id, selectedCourseId, session, selectedCourse, showToast]);
+
+  useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatMessages]);
 
@@ -189,18 +307,40 @@ export default function LiveSessionPage() {
       e?.preventDefault();
       const text = newMessage.trim();
       if (!text) return;
-      const msg: ChatMessage = {
-        id: Date.now(),
-        senderId: currentUser.id,
-        senderName: currentUser.name,
-        text,
-        time: nowFormatted(),
-        isInstructor: currentUser.role === "instructor" || currentUser.role === "co-instructor",
-      };
-      setChatMessages((prev) => [...prev, msg]);
+      const socket = socketRef.current;
+
+      const courseId = Number.isNaN(selectedCourseId) ? selectedCourse?.id ?? 0 : selectedCourseId;
+
+      if (socket?.connected) {
+        socket.emit("live:chat-message", {
+          courseId,
+          text,
+        });
+        // Clear typing indicator on send
+        socket.emit("live:user-typing", { courseId, isTyping: false });
+      } else {
+        console.warn("[Chat] Socket not connected, message not sent");
+        showToast("error", "You are not connected to the live session. Please refresh and try again.");
+      }
       setNewMessage("");
     },
-    [newMessage, currentUser]
+    [currentUser, newMessage, selectedCourse?.id, selectedCourseId, showToast]
+  );
+
+  // Handle typing indicator
+  const handleInputChange = useCallback(
+    (value: string) => {
+      setNewMessage(value);
+      const socket = socketRef.current;
+      if (socket?.connected) {
+        const courseId = Number.isNaN(selectedCourseId) ? selectedCourse?.id ?? 0 : selectedCourseId;
+        socket.emit("live:user-typing", {
+          courseId,
+          isTyping: value.length > 0,
+        });
+      }
+    },
+    [selectedCourse?.id, selectedCourseId]
   );
 
   // ----- Toggle media -----
@@ -256,6 +396,9 @@ export default function LiveSessionPage() {
           </div>
           <div className="flex items-center space-x-3">
             {session.status === "live" && <span className="px-3 py-1 rounded-full text-sm bg-red-600">🔴 LIVE</span>}
+            <div className={`text-xs px-2 py-1 rounded-full ${isRealtimeConnected ? "bg-green-600" : "bg-gray-700"}`}>
+              {isRealtimeConnected ? "Realtime connected" : "Realtime offline"}
+            </div>
             <div className="text-sm text-gray-300">{onlineCount} online</div>
           </div>
         </div>
@@ -399,7 +542,7 @@ export default function LiveSessionPage() {
               <form onSubmit={sendChat} className="flex gap-2">
                 <input
                   value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
+                  onChange={(e) => handleInputChange(e.target.value)}
                   placeholder="Type a message..."
                   className="flex-1 bg-gray-800 rounded px-3 py-2 text-sm focus:outline-none"
                 />
@@ -407,6 +550,11 @@ export default function LiveSessionPage() {
                   Send
                 </button>
               </form>
+              {usersTyping.size > 0 && (
+                <div className="text-xs text-gray-400 italic mt-2">
+                  {Array.from(usersTyping).join(", ")} {usersTyping.size === 1 ? "is" : "are"} typing...
+                </div>
+              )}
             </div>
 
             {/* Resources & Previous Recordings */}
