@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useAuth } from "../store/auth";
+import BackButton from "../components/BackButton";
 
 const desktopNavItems = [
   { to: "/dashboard", label: "Dashboard" },
@@ -168,7 +169,10 @@ export default function DashboardLayout() {
 
           <section className="rounded-3xl border border-[var(--line)] bg-[var(--panel)] p-4 sm:p-6 lg:p-8">
             <div className="mb-6 flex flex-col gap-3 border-b border-[var(--line)] pb-4 sm:flex-row sm:items-center sm:justify-between">
-              <h1 className="font-display text-2xl">{adminDesktopNavItems.find((i) => i.to === location.pathname)?.label ?? "Dashboard"}</h1>
+              <div className="flex flex-wrap items-center gap-3">
+                <BackButton fallbackTo="/dashboard" label="Back" />
+                <h1 className="font-display text-2xl">{adminDesktopNavItems.find((i) => i.to === location.pathname)?.label ?? "Dashboard"}</h1>
+              </div>
               <div className="flex flex-wrap items-center gap-3">
                 <Link className="text-sm text-[var(--gold)] hover:underline" to="/">
                   Public Site

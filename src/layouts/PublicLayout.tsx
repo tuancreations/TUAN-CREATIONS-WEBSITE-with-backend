@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import BackButton from "../components/BackButton";
 
 const publicNav = [
   { to: "/", label: "Home" },
@@ -23,12 +24,15 @@ export default function PublicLayout() {
 
       <header className="sticky top-0 z-40 backdrop-blur-md bg-[color:rgba(8,17,29,0.78)] border-b border-[var(--line)]">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
-          <Link to="/" className="flex items-center gap-2 text-center text-[var(--gold)] sm:gap-3 lg:text-left">
-            <span className="logo-container logo-container-sm">
-              <img src="/tuan-logo.png" alt="TUAN Creations Company Ltd Logo" />
-            </span>
-            <span className="font-display text-base tracking-wide sm:text-lg lg:text-xl">TUAN Creations Company Ltd</span>
-          </Link>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <BackButton fallbackTo="/" label="Back" className="shrink-0" />
+            <Link to="/" className="flex items-center gap-2 text-center text-[var(--gold)] sm:gap-3 lg:text-left">
+              <span className="logo-container logo-container-sm">
+                <img src="/tuan-logo.png" alt="TUAN Creations Company Ltd Logo" />
+              </span>
+              <span className="font-display text-base tracking-wide sm:text-lg lg:text-xl">TUAN Creations Company Ltd</span>
+            </Link>
+          </div>
 
           <nav className="hidden flex-wrap justify-center gap-2 md:justify-end lg:flex">
             {publicNav.map((item) => (

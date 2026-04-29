@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { BookOpen, Globe, Mail, Menu, ShoppingBag, Tv, Users, X, Lightbulb, Handshake, Bell, BarChart3, GraduationCap } from "lucide-react";
 import { theme } from "../bright-gold/theme";
 import { useAuth } from "../store/auth";
+import BackButton from "./BackButton";
 
 const navigation = [
   { name: "Home", href: "/", icon: Globe },
@@ -120,12 +121,15 @@ const Header = memo(() => {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-3 py-3">
-          <Link to="/" className="flex items-center gap-2" onClick={closeMenu}>
-            <span className="logo-container logo-container-sm shrink-0">
-              <img src="/tuan-logo.png" alt="TUAN Creations Company Ltd Logo" />
-            </span>
-            <span className="text-base font-bold tracking-tight text-gray-900 sm:text-lg lg:text-xl">TUAN Creations Company Ltd</span>
-          </Link>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <BackButton fallbackTo="/" label="Back" className="shrink-0" />
+            <Link to="/" className="flex items-center gap-2" onClick={closeMenu}>
+              <span className="logo-container logo-container-sm shrink-0">
+                <img src="/tuan-logo.png" alt="TUAN Creations Company Ltd Logo" />
+              </span>
+              <span className="text-base font-bold tracking-tight text-gray-900 sm:text-lg lg:text-xl">TUAN Creations Company Ltd</span>
+            </Link>
+          </div>
 
           <nav className="hidden flex-wrap justify-end gap-2 md:flex">
             <NavLinks />

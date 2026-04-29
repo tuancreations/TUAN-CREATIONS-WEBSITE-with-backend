@@ -6,6 +6,7 @@ import { Globe, X } from "lucide-react";
 import { io, type Socket } from "socket.io-client";
 import { getApiOrigin, getCourses, getLiveSession, getStoredToken, joinLiveSession, recordAction, startRecording, stopRecording, type Course, type SessionMeta } from "../services/api";
 import { useAuth } from "../store/auth";
+import BackButton from "../components/BackButton";
 
 type Role = "instructor" | "co-instructor" | "student" | "admin";
 
@@ -422,12 +423,15 @@ export default function LiveSessionPage() {
       {/* Header */}
       <header className="bg-gray-900/60 border-b border-gray-800 p-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold">{session.title}</h1>
-            <p className="text-sm text-gray-300">{session.instructor} • {session.topic}</p>
-            {session.status !== "live" && session.startTime && (
-              <p className="text-xs text-gray-400">Next session starts: {new Date(session.startTime).toLocaleString()}</p>
-            )}
+          <div className="flex items-center gap-3">
+            <BackButton fallbackTo="/academy" label="Back" className="border-gray-700 text-gray-300 hover:border-gray-500 hover:text-white" />
+            <div>
+              <h1 className="text-xl font-bold">{session.title}</h1>
+              <p className="text-sm text-gray-300">{session.instructor} • {session.topic}</p>
+              {session.status !== "live" && session.startTime && (
+                <p className="text-xs text-gray-400">Next session starts: {new Date(session.startTime).toLocaleString()}</p>
+              )}
+            </div>
           </div>
           <div className="flex items-center space-x-3">
             {session.status === "live" && <span className="px-3 py-1 rounded-full text-sm bg-red-600">🔴 LIVE</span>}

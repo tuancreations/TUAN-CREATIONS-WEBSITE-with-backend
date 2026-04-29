@@ -230,6 +230,24 @@ img {
   outline-offset: 3px;
 }
 
+@media (max-width: 768px) {
+  .whatsapp-float {
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .whatsapp-float__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+  }
+
+  .whatsapp-float__icon svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
 @keyframes float-glow {
   0%,
   100% {
