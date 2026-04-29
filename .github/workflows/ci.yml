@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install backend dependencies
+        run: |
+          cd backend
+          npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Start backend (background)
+        run: |
+          cd backend
+          nohup node src/server.js > server.log 2>&1 &
+          echo $! > server.pid
+
+      - name: Wait for backend health
+        run: |
+          for i in {1..30}; do
+            if curl -sSf http://localhost:4000/api/health; then
+              echo "backend healthy"; break
+            fi
+            echo "waiting for backend... ($i)"; sleep 2
+          done
+
+      - name: Run socket.io integration test
+        run: |
+          node backend/test/socket-test.mjs
+
+      - name: Upload backend logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-server-log
+          path: backend/server.log
+
+      - name: Kill backend
+        if: always()
+        run: |
+          if [ -f backend/server.pid ]; then kill "$(cat backend/server.pid)" || true; fi

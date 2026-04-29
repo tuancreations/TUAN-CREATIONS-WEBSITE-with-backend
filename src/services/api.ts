@@ -1106,30 +1106,3 @@ export async function getMentorshipPartners(courseId: number) {
     return [];
   }
 }
-
-export async function getAcademyAnalytics() {
-  try {
-    const response = await apiRequest<{
-      summary: {
-        totalCourses: number;
-        totalEnrollments: number;
-        totalCertificates: number;
-        totalStudents: number;
-        completionRate: number;
-      };
-      courseAnalytics: Array<{
-        _id: number;
-        enrollmentCount: number;
-        completionCount: number;
-        avgProgress: number;
-      }>;
-      enrollmentTrend: Array<{
-        _id: string;
-        count: number;
-      }>;
-    }>(`/admin/academy/analytics`);
-    return response;
-  } catch {
-    return null;
-  }
-}
