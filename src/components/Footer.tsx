@@ -65,7 +65,39 @@ const Footer = memo(() => {
 
         <div className="mt-8 border-t border-gray-300 pt-6 text-center">
           <p className="text-sm font-medium text-gray-800 md:text-base">
-            Copyright {config["copyright.year"] || "2026"} {config["site.name"] || "TUAN Creations Company Ltd"}. All rights reserved.
+            © {config["copyright.year"] || "2026"} {config["site.name"] || "TUAN Creations Company Ltd"}. All rights reserved.
+          </p>
+
+          <div className="mt-2 flex flex-col items-center gap-2 text-sm text-gray-800 md:flex-row md:justify-center md:gap-6">
+            {config["contact.email"] && (
+              <div className="flex items-center gap-2">
+                <Mail className="h-4 w-4 text-teal-700" />
+                <a href={`mailto:${config["contact.email"]}`} className="hover:underline">{config["contact.email"]}</a>
+              </div>
+            )}
+
+            {(config["contact.phone"] || true) && (
+              <div className="flex items-center gap-2">
+                <Phone className="h-4 w-4 text-teal-700" />
+                <a href={`tel:${config["contact.phone"] || "+256753414058"}`} className="hover:underline">{config["contact.phone"] || "+256 753 414 058"}</a>
+              </div>
+            )}
+
+            <div className="flex items-center gap-2">
+              <Phone className="h-4 w-4 text-teal-700" />
+              <a href="tel:+256787882124" className="hover:underline">+256 787 882 124</a>
+            </div>
+
+            {config["contact.location"] && (
+              <div className="flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-teal-700" />
+                <span>{config["contact.location"]}</span>
+              </div>
+            )}
+          </div>
+
+          <p className="mt-3 text-xs text-gray-700 md:text-sm">
+            Company registration number (URSB): 80034131408564. P.O.Box 207659 - Kampala.
           </p>
         </div>
       </div>

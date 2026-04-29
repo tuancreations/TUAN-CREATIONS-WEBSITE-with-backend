@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Mail, Linkedin, Phone, Twitter, User } from "lucide-react";
+import { User } from "lucide-react";
 import {
   DEFAULT_MANAGEMENT_TEAM,
   loadManagementTeam,

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X, Mail, Phone, MapPin } from "lucide-react";
 import BackButton from "../components/BackButton";
 
 const publicNav = [
@@ -199,17 +199,46 @@ export default function PublicLayout() {
       </main>
 
       <footer className="mt-16 border-t border-[var(--line)] bg-[color:rgba(7,14,24,0.9)]">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 px-4 py-10 text-center text-sm text-[var(--text-soft)] sm:px-6 lg:grid-cols-3 lg:px-8 lg:text-left">
-          <div>
-            <p>TUAN Digital Platform - a product by TUAN Creations Company Ltd.</p>
-            <p className="mt-1 text-xs">[The United African Nation - "All-in-One Digital Space"]</p>
+        <div className="mx-auto max-w-7xl px-4 py-10 text-sm text-[var(--text-soft)] sm:px-6 lg:px-8">
+          <div className="text-center">
+            <p className="font-display text-base tracking-wide text-[var(--gold)] sm:text-lg">
+              TUAN Digital Platform
+            </p>
+            <p className="mt-1 text-xs text-[var(--text-soft)] sm:text-sm">
+              {"[The United African Nation - \"All-in-One Digital Space\"]"}
+            </p>
           </div>
-          <div className="space-y-1">
-            <p>tuancreations.africa@gmail.com</p>
-            <p>+256 753 414 058</p>
-            <p>Kampala, Uganda</p>
+
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="space-y-3 text-center md:text-left md:justify-self-start md:max-w-md md:justify-items-start">
+              <div className="flex items-center justify-center gap-2 md:justify-start">
+                <Mail className="h-4 w-4 text-teal-400" />
+                <a href="mailto:tuancreations.africa@gmail.com" className="hover:underline">tuancreations.africa@gmail.com</a>
+              </div>
+
+              <div className="flex items-center justify-center gap-2 md:justify-start">
+                <Phone className="h-4 w-4 text-teal-400" />
+                <a href="tel:+256753414058" className="hover:underline">+256 753 414 058</a>
+              </div>
+
+              <div className="flex items-center justify-center gap-2 md:justify-start">
+                <Phone className="h-4 w-4 text-teal-400" />
+                <a href="tel:+256787882124" className="hover:underline">+256 787 882 124</a>
+              </div>
+
+              <div className="flex items-center justify-center gap-2 md:justify-start">
+                <MapPin className="h-4 w-4 text-teal-400" />
+                <span>Kampala, Uganda</span>
+              </div>
+            </div>
+
+            <div className="text-center md:text-right md:justify-self-end md:max-w-md">
+              <p className="font-medium text-[var(--text)]">© 2026 TUAN Creations Company Ltd</p>
+              <p className="mt-1 text-xs leading-relaxed">
+                Company registration number (URSB): 80034131408564. P.O.Box 207659 - Kampala.
+              </p>
+            </div>
           </div>
-          <p className="lg:text-right">Copyright 2026 TUAN Creations Company Ltd</p>
         </div>
       </footer>
     </div>

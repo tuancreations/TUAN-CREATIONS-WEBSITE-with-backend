@@ -1109,7 +1109,7 @@ export async function getMentorshipPartners(courseId: number) {
 
 // ===== SITE CONFIGURATION =====
 
-export type SiteConfig = Record<string, any>;
+export type SiteConfig = Record<string, string>;
 
 export async function getSiteConfig(): Promise<SiteConfig> {
   try {
@@ -1133,7 +1133,7 @@ export async function getSiteConfig(): Promise<SiteConfig> {
   }
 }
 
-export async function updateSiteConfig(updates: Record<string, any>) {
+export async function updateSiteConfig(updates: Record<string, string>) {
   try {
     const response = await apiRequest<SiteConfig>("/admin/config", {
       method: "POST",

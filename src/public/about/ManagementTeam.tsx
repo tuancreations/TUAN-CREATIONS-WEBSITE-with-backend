@@ -1,4 +1,3 @@
-import { Linkedin, Mail, Phone, Twitter } from "lucide-react";
 import { loadManagementTeam } from "../../modules/admin/managementTeamData";
 
 const TEAM = loadManagementTeam();
