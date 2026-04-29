@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+    environment:
+      - NODE_ENV=production
+      - PORT=4000
+      - CLIENT_ORIGIN=http://localhost:5173
+      - REDIS_URL=redis://redis:6379
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend:/app
+    restart: unless-stopped

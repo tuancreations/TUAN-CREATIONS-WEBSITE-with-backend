@@ -765,6 +765,48 @@ export async function getCourseRecordings(courseId: number) {
   }
 }
 
+export async function startRecording(courseId: number) {
+  try {
+    const token = getStoredToken();
+    if (!token) throw new Error("Not authenticated");
+    
+    const response = await fetch(`${getApiOrigin()}/api/academy/courses/${courseId}/recording/start`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    
+    if (!response.ok) throw new Error(`Recording start failed: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error("Start recording error:", error);
+    throw error;
+  }
+}
+
+export async function stopRecording(courseId: number) {
+  try {
+    const token = getStoredToken();
+    if (!token) throw new Error("Not authenticated");
+    
+    const response = await fetch(`${getApiOrigin()}/api/academy/courses/${courseId}/recording/stop`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    
+    if (!response.ok) throw new Error(`Recording stop failed: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error("Stop recording error:", error);
+    throw error;
+  }
+}
+
 export async function completeCourse(courseId: number) {
   try {
     return await apiRequest<{ ok: boolean; certificate: Certificate; enrollment: AcademyEnrollment }>(`/academy/courses/${courseId}/complete-course`, {

@@ -5,13 +5,17 @@ import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import { Server as SocketIOServer } from "socket.io";
+import { createAdapter } from "@socket.io/redis-adapter";
+import { createClient as createRedisClient } from "redis";
 import { config } from "./config.js";
+import { sendEmail } from "./shared/mailer.js";
 import { Action, Channel, Certificate, Course, Enrollment, ForumReply, ForumThread, InnovationProgram, Listing, LiveSession, Metric, MentorshipPairing, Notification, Project, Quiz, QuizResult, Recording, Session, StudyGroup, User } from "./models.js";
 import { seedDatabase } from "./seed.js";
 
 const app = express();
 const httpServer = createServer(app);
 const liveRooms = new Map();
+let io;
 
 const now = () => new Date().toISOString();
 
@@ -518,6 +522,16 @@ app.post("/api/academy/enroll/:courseId", authenticate, async (req, res) => {
     actorEmail: req.user.email,
     actorName: req.user.name,
   });
+  // Send enrollment confirmation email (if mailer configured)
+  try {
+    await sendEmail({
+      to: req.user.email,
+      subject: `Enrollment confirmed: ${course.title}`,
+      text: `Hi ${req.user.name},\n\nYou have been enrolled in ${course.title}.\n\nVisit your dashboard to join live sessions.\n`,
+    });
+  } catch (err) {
+    console.error("[Enroll] Failed to send enrollment email:", err && err.message ? err.message : err);
+  }
 
   return res.status(201).json({
     enrollment: serializeEnrollment(enrollment.toObject(), req.user, course.toObject()),
@@ -557,6 +571,73 @@ app.post("/api/academy/live/:courseId/join", authenticate, async (req, res) => {
     ok: true,
     enrollment: serializeEnrollment(enrollment.toObject(), req.user, course),
   });
+});
+
+// Recording controls (instructor/admin)
+app.post('/api/academy/courses/:courseId/recording/start', authenticate, async (req, res) => {
+  const courseId = Number(req.params.courseId);
+  if (Number.isNaN(courseId)) return res.status(400).json({ message: 'Invalid course id' });
+
+  const course = await Course.findOne({ id: courseId });
+  if (!course) return res.status(404).json({ message: 'Course not found' });
+
+  if (req.user.role !== 'admin' && req.user.role !== 'instructor') return res.status(403).json({ message: 'Instructor access required' });
+
+  const room = liveRooms.get(courseId);
+  if (room) {
+    room.session.isRecording = true;
+    io.to(getLiveRoomName(courseId)).emit('live:recording-started', { courseId });
+  }
+
+  // Ensure session started record exists
+  try {
+    const existing = await Session.findOne({ courseId, endedAt: null });
+    if (!existing && course.instructorId) {
+      await Session.create({ courseId, instructorId: course.instructorId, title: course.title, topic: 'Live recording', startedAt: new Date(), attendance: [], totalAttendees: 0 });
+    }
+  } catch (err) {
+    console.error('[Recording] Failed to start session record:', err && err.message ? err.message : err);
+  }
+
+  await Action.create({ kind: 'academy.recording.start', payload: { courseId, courseTitle: course.title }, actorEmail: req.user.email, actorName: req.user.name });
+  return res.json({ ok: true });
+});
+
+app.post('/api/academy/courses/:courseId/recording/stop', authenticate, async (req, res) => {
+  const courseId = Number(req.params.courseId);
+  if (Number.isNaN(courseId)) return res.status(400).json({ message: 'Invalid course id' });
+
+  const course = await Course.findOne({ id: courseId });
+  if (!course) return res.status(404).json({ message: 'Course not found' });
+
+  if (req.user.role !== 'admin' && req.user.role !== 'instructor') return res.status(403).json({ message: 'Instructor access required' });
+
+  const { recordingUrl, duration, videoProvider } = req.body ?? {};
+
+  try {
+    const recording = await Recording.create({ courseId, courseTitle: course.title, sessionTopic: 'Live session', instructor: course.instructor, recordingUrl: recordingUrl || null, duration: Number(duration) || 0, recordedAt: new Date(), videoProvider: videoProvider || 'internal' });
+
+    const room = liveRooms.get(courseId);
+    if (room) {
+      room.session.recordingUrl = recording.recordingUrl;
+      room.session.isRecording = false;
+      room.session.previousSessions = (room.session.previousSessions || []).concat({ title: room.session.title, recordingUrl: recording.recordingUrl });
+      io.to(getLiveRoomName(courseId)).emit('live:recording-stopped', { recording });
+    }
+
+    // Mark session ended
+    const sessionDoc = await Session.findOne({ courseId, endedAt: null });
+    if (sessionDoc) {
+      sessionDoc.endedAt = new Date();
+      await sessionDoc.save();
+    }
+
+    await Action.create({ kind: 'academy.recording.stop', payload: { courseId, courseTitle: course.title, recordingUrl: recording.recordingUrl }, actorEmail: req.user.email, actorName: req.user.name });
+    return res.status(201).json({ recording: recording.toObject() });
+  } catch (err) {
+    console.error('[Recording] Failed to stop recording:', err && err.message ? err.message : err);
+    return res.status(500).json({ message: 'Failed to save recording' });
+  }
 });
 
 app.get("/api/academy/enrollments/me", authenticate, async (req, res) => {
@@ -1132,12 +1213,26 @@ async function start() {
 
   await seedDatabase();
 
-  const io = new SocketIOServer(httpServer, {
+  io = new SocketIOServer(httpServer, {
     cors: {
       origin: config.clientOrigin,
       credentials: true,
     },
   });
+
+  // Configure Redis adapter for Socket.IO when REDIS_URL provided
+  if (config.redisUrl) {
+    try {
+      const pubClient = createRedisClient({ url: config.redisUrl });
+      const subClient = pubClient.duplicate();
+      await pubClient.connect();
+      await subClient.connect();
+      io.adapter(createAdapter(pubClient, subClient));
+      console.log("[Socket] Redis adapter configured");
+    } catch (err) {
+      console.error("[Socket] Failed to configure Redis adapter:", err && err.message ? err.message : err);
+    }
+  }
 
   io.use(async (socket, next) => {
     const token = socket.handshake.auth?.token;
@@ -1231,6 +1326,30 @@ async function start() {
 
         console.log(`[Socket] User ${socket.data.user.name} joined course ${normalizedCourseId}`);
 
+        // Persist attendance to Session collection
+        try {
+          const sessionDoc = await Session.findOne({ courseId: normalizedCourseId, endedAt: null });
+          const attendanceEntry = { userId: socket.data.user.id, userName: socket.data.user.name, joinedAt: new Date() };
+
+          if (sessionDoc) {
+            sessionDoc.attendance = sessionDoc.attendance.concat(attendanceEntry);
+            sessionDoc.totalAttendees = (sessionDoc.totalAttendees || 0) + 1;
+            await sessionDoc.save();
+          } else if (course.instructorId) {
+            await Session.create({
+              courseId: normalizedCourseId,
+              instructorId: course.instructorId,
+              title: room.session.title,
+              topic: room.session.topic,
+              startedAt: new Date(),
+              attendance: [attendanceEntry],
+              totalAttendees: 1,
+            });
+          }
+        } catch (err) {
+          console.error("[Socket] Failed to persist attendance:", err && err.message ? err.message : err);
+        }
+
         socket.emit("live:room-state", room.session);
         io.to(getLiveRoomName(normalizedCourseId)).emit("live:participants", room.participants);
         socket.to(getLiveRoomName(normalizedCourseId)).emit("live:participant-joined", participant);
@@ -1320,6 +1439,24 @@ async function start() {
       room.participants = room.participants.filter((entry) => entry.id !== socket.data.user.id);
       room.session.participants = room.participants;
       room.session.chatMessages = room.chatMessages;
+
+      // Persist leave time in Session attendance
+      (async () => {
+        try {
+          const sessionDoc = await Session.findOne({ courseId: normalizedCourseId, endedAt: null });
+          if (sessionDoc && Array.isArray(sessionDoc.attendance)) {
+            const entry = sessionDoc.attendance.find((a) => String(a.userId) === String(socket.data.user.id) && !a.leftAt);
+            if (entry) {
+              entry.leftAt = new Date();
+              const joined = new Date(entry.joinedAt || Date.now());
+              entry.durationMinutes = Math.max(0, Math.round((entry.leftAt.getTime() - joined.getTime()) / 60000));
+              await sessionDoc.save();
+            }
+          }
+        } catch (err) {
+          console.error("[Socket] Failed to persist leave attendance:", err && err.message ? err.message : err);
+        }
+      })();
 
       io.to(getLiveRoomName(normalizedCourseId)).emit("live:participant-left", { userId: socket.data.user.id });
       emitLiveRoomState(io, normalizedCourseId);

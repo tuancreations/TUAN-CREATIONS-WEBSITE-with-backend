@@ -4,7 +4,7 @@ import Select from "react-select";
 import countryList from "react-select-country-list";
 import { Globe, X } from "lucide-react";
 import { io, type Socket } from "socket.io-client";
-import { getApiOrigin, getCourses, getLiveSession, getStoredToken, joinLiveSession, recordAction, type Course, type SessionMeta } from "../services/api";
+import { getApiOrigin, getCourses, getLiveSession, getStoredToken, joinLiveSession, recordAction, startRecording, stopRecording, type Course, type SessionMeta } from "../services/api";
 import { useAuth } from "../store/auth";
 
 type Role = "instructor" | "co-instructor" | "student" | "admin";
@@ -61,6 +61,7 @@ export default function LiveSessionPage() {
   const [isVideoOff, setIsVideoOff] = useState(false);
   const [isHandRaised, setIsHandRaised] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [isRecordingLoading, setIsRecordingLoading] = useState(false);
 
   const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
   const [isRealtimeConnected, setIsRealtimeConnected] = useState(false);
@@ -348,6 +349,40 @@ export default function LiveSessionPage() {
   const toggleVideo = useCallback(() => setIsVideoOff((v) => !v), []);
   const toggleHand = useCallback(() => setIsHandRaised((v) => !v), []);
 
+  const toggleRecording = useCallback(async () => {
+    const courseId = Number.isNaN(selectedCourseId) ? selectedCourse?.id ?? 0 : selectedCourseId;
+    if (!courseId) {
+      showToast("error", "Course not found");
+      return;
+    }
+
+    if (user?.role !== "instructor" && user?.role !== "admin") {
+      showToast("error", "Only instructors can record sessions");
+      return;
+    }
+
+    setIsRecordingLoading(true);
+    try {
+      if (!isRecording) {
+        // Start recording
+        await startRecording(courseId);
+        setIsRecording(true);
+        showToast("success", "Recording started");
+      } else {
+        // Stop recording
+        await stopRecording(courseId);
+        setIsRecording(false);
+        showToast("success", "Recording stopped and saved");
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Recording operation failed";
+      showToast("error", message);
+      console.error("Recording error:", error);
+    } finally {
+      setIsRecordingLoading(false);
+    }
+  }, [isRecording, selectedCourse?.id, selectedCourseId, showToast, user?.role]);
+
   // ----- Countdown -----
   const [countdown, setCountdown] = useState<number>(
     session?.startTime ? Math.max(Math.floor((new Date(session.startTime).getTime() - Date.now()) / 1000), 0) : 0
@@ -488,12 +523,19 @@ export default function LiveSessionPage() {
                   </button>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="text-sm text-gray-300">Recording: {isRecording ? "ON" : "OFF"}</div>
+                  <div className={`text-sm font-semibold ${isRecording ? "text-red-400" : "text-gray-300"}`}>
+                    Recording: {isRecording ? "ON" : "OFF"}
+                  </div>
                   <button
-                    onClick={() => setIsRecording((v) => !v)}
-                    className="px-3 py-2 rounded bg-gray-800"
+                    onClick={toggleRecording}
+                    disabled={isRecordingLoading}
+                    className={`px-3 py-2 rounded font-medium transition ${
+                      isRecording
+                        ? "bg-red-600 hover:bg-red-700"
+                        : "bg-gray-800 hover:bg-gray-700"
+                    } ${isRecordingLoading ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
-                    Toggle Recording
+                    {isRecordingLoading ? "Loading..." : isRecording ? "Stop Recording" : "Start Recording"}
                   </button>
                 </div>
               </div>

@@ -42,4 +42,15 @@ export const config = {
   clientOrigin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
   adminEmail: process.env.ADMIN_EMAIL?.trim().toLowerCase() || "",
   adminPassword: process.env.ADMIN_PASSWORD || "",
+  // Optional Redis URL for Socket.IO adapter (e.g. redis://user:pass@host:6379)
+  redisUrl: process.env.REDIS_URL || process.env.SOCKET_REDIS_URL || "",
+  // Email provider settings (optional)
+  email: {
+    host: process.env.EMAIL_HOST || "",
+    port: process.env.EMAIL_PORT ? Number(process.env.EMAIL_PORT) : undefined,
+    secure: process.env.EMAIL_SECURE === "true",
+    authUser: process.env.EMAIL_USER || "",
+    authPass: process.env.EMAIL_PASS || "",
+    from: process.env.EMAIL_FROM || "no-reply@tuancreations.com",
+  },
 };
