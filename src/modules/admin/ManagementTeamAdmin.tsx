@@ -1,41 +1,18 @@
 import { useEffect, useState } from "react";
 import { Mail, Linkedin, Phone, Twitter, User } from "lucide-react";
-
-type Member = {
-  id: string;
-  name: string;
-  position?: string;
-  photo?: string;
-  description?: string;
-  experience?: string;
-  email?: string;
-  phone?: string;
-  linkedin?: string;
-  twitter?: string;
-};
-
-const STORAGE_KEY = "tuan_management_team";
-
-function load(): Member[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    return JSON.parse(raw) as Member[];
-  } catch {
-    return [];
-  }
-}
-
-function save(data: Member[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
+import {
+  DEFAULT_MANAGEMENT_TEAM,
+  loadManagementTeam,
+  saveManagementTeam,
+  type ManagementTeamMember,
+} from "./managementTeamData";
 
 export default function ManagementTeamAdmin() {
-  const [members, setMembers] = useState<Member[]>(() => load());
-  const [editing, setEditing] = useState<Member | null>(null);
+  const [members, setMembers] = useState<ManagementTeamMember[]>(() => loadManagementTeam());
+  const [editing, setEditing] = useState<ManagementTeamMember | null>(null);
 
   useEffect(() => {
-    save(members);
+    saveManagementTeam(members);
   }, [members]);
 
   function resetForm() {
@@ -43,13 +20,15 @@ export default function ManagementTeamAdmin() {
   }
 
   function handleAdd() {
-    const newMember: Member = {
+    const newMember: ManagementTeamMember = {
       id: String(Date.now()),
       name: "New member",
       position: "",
-      photo: "",
+      nationality: "",
+      dateOfBirth: "",
+      photo: DEFAULT_MANAGEMENT_TEAM[0]?.photo ?? "",
       description: "",
-      experience: "",
+      experience: [],
       email: "",
       phone: "",
       linkedin: "",
@@ -59,7 +38,7 @@ export default function ManagementTeamAdmin() {
     setEditing(newMember);
   }
 
-  function handleSave(updated: Member) {
+  function handleSave(updated: ManagementTeamMember) {
     setMembers((s) => s.map((m) => (m.id === updated.id ? updated : m)));
     setEditing(null);
   }
@@ -79,7 +58,7 @@ export default function ManagementTeamAdmin() {
         </div>
         <div className="flex gap-2">
           <button onClick={handleAdd} className="btn">Add member</button>
-          <button onClick={() => { setMembers([]); }} className="btn border">Clear all</button>
+          <button onClick={() => setMembers(DEFAULT_MANAGEMENT_TEAM)} className="btn border">Reset defaults</button>
         </div>
       </div>
 
@@ -112,12 +91,14 @@ export default function ManagementTeamAdmin() {
           <div className="mt-3 grid gap-2 sm:grid-cols-2">
             <input value={editing.name} onChange={(e) => setEditing({ ...editing, name: e.target.value })} className="input" placeholder="Full name" />
             <input value={editing.position} onChange={(e) => setEditing({ ...editing, position: e.target.value })} className="input" placeholder="Position" />
-            <input value={editing.photo} onChange={(e) => setEditing({ ...editing, photo: e.target.value })} className="input" placeholder="Photo URL (public)" />
+            <input value={editing.nationality} onChange={(e) => setEditing({ ...editing, nationality: e.target.value })} className="input" placeholder="Nationality" />
+            <input value={editing.dateOfBirth} onChange={(e) => setEditing({ ...editing, dateOfBirth: e.target.value })} className="input" placeholder="Date of birth" />
+            <input value={editing.photo} onChange={(e) => setEditing({ ...editing, photo: e.target.value })} className="input" placeholder="Photo URL (public or data URI)" />
             <input value={editing.email} onChange={(e) => setEditing({ ...editing, email: e.target.value })} className="input" placeholder="Email" />
             <input value={editing.phone} onChange={(e) => setEditing({ ...editing, phone: e.target.value })} className="input" placeholder="Phone" />
             <input value={editing.linkedin} onChange={(e) => setEditing({ ...editing, linkedin: e.target.value })} className="input" placeholder="LinkedIn URL" />
             <input value={editing.twitter} onChange={(e) => setEditing({ ...editing, twitter: e.target.value })} className="input" placeholder="Twitter URL" />
-            <input value={editing.experience} onChange={(e) => setEditing({ ...editing, experience: e.target.value })} className="input" placeholder="Experience (comma separated)" />
+            <input value={editing.experience.join(", ")} onChange={(e) => setEditing({ ...editing, experience: e.target.value.split(",").map((item) => item.trim()).filter(Boolean) })} className="input" placeholder="Experience (comma separated)" />
             <textarea value={editing.description} onChange={(e) => setEditing({ ...editing, description: e.target.value })} className="input col-span-2" placeholder="Short description" />
           </div>
           <div className="mt-3 flex gap-2">

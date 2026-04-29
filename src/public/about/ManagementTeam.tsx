@@ -1,39 +1,7 @@
 import { Mail, Linkedin, Phone, Twitter } from "lucide-react";
+import { loadManagementTeam } from "../../modules/admin/managementTeamData";
 
-type Member = {
-  name: string;
-  position: string;
-  photo?: string;
-  description?: string;
-  experience?: string[];
-  email?: string;
-  phone?: string;
-  linkedin?: string;
-  twitter?: string;
-};
-
-const TEAM: Member[] = [
-  {
-    name: "Tuaniil Grandee",
-    position: "Founder & CEO",
-    photo: "/tuan-logo.png",
-    description: "Leads product strategy and partnerships. Focused on building accessible digital services for SMEs and learners.",
-    experience: ["15+ years in ICT and product leadership", "Led multiple startups to market"],
-    email: "ceo@tuan.digital",
-    linkedin: "https://www.linkedin.com/",
-  },
-  {
-    name: "Aisha Mensah",
-    position: "Head of Operations",
-    photo: "/tuan-logo.png",
-    description: "Oversees operations, delivery and quality assurance across TUAN services.",
-    experience: ["10 years in program operations", "Managed large-scale training programs"],
-    email: "aisha@tuan.digital",
-    phone: "+233 24 000 0000",
-    linkedin: "https://www.linkedin.com/",
-    twitter: "https://twitter.com/",
-  },
-];
+const TEAM = loadManagementTeam();
 
 export default function ManagementTeam() {
   return (
@@ -43,13 +11,17 @@ export default function ManagementTeam() {
 
       <p className="mt-4 text-sm text-[var(--text-soft)] max-w-3xl">Meet the experienced leaders steering TUAN Creations Company Ltd. Each member brings deep sector experience and a commitment to our mission.</p>
 
-      <div className="mt-8 grid gap-6 sm:grid-cols-2">
+      <div className="mt-8 grid gap-6 lg:grid-cols-2">
         {TEAM.map((m) => (
-          <article key={m.name} className="card flex gap-4 items-start">
-            <img src={m.photo} alt={m.name} className="h-20 w-20 rounded-lg object-cover" />
+          <article key={m.id} className="card flex gap-4 items-start">
+            <img src={m.photo} alt={m.name} className="h-24 w-24 rounded-2xl object-cover" />
             <div>
               <h2 className="font-display text-lg text-[var(--text)]">{m.name}</h2>
               <p className="text-sm text-[var(--text-soft)]">{m.position}</p>
+              <div className="mt-2 flex flex-wrap gap-2 text-xs text-[var(--text-soft)]">
+                <span className="rounded-full border border-[var(--line)] px-3 py-1">{m.nationality}</span>
+                <span className="rounded-full border border-[var(--line)] px-3 py-1">DOB: {m.dateOfBirth}</span>
+              </div>
               {m.description && <p className="mt-2 text-sm text-[var(--text-soft)]">{m.description}</p>}
 
               {m.experience && (
