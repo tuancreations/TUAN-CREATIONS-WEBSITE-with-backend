@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Globe, Mail, Menu, ShoppingBag, Tv, Users, X, Lightbulb, Handshake, Bell, BarChart3, GraduationCap } from "lucide-react";
+import { BookOpen, Globe, Mail, Menu, ShoppingBag, Tv, Users, X, Lightbulb, Handshake, Bell, BarChart3, GraduationCap, ChevronDown } from "lucide-react";
 import { theme } from "../bright-gold/theme";
 import { useAuth } from "../store/auth";
 import BackButton from "./BackButton";
@@ -20,6 +20,7 @@ const navigation = [
 
 const Header = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [aboutMenuOpen, setAboutMenuOpen] = useState(false);
   const location = useLocation();
   const { user } = useAuth();
 
@@ -36,6 +37,59 @@ const Header = memo(() => {
   const NavLinks = ({ onClick }: { onClick?: () => void }) => (
     <>
       {navigation.map(({ name, href, icon: Icon }) => {
+        if (name === "About") {
+          return (
+            <div key={name} className="relative">
+              <button
+                type="button"
+                onClick={() => setAboutMenuOpen((prev) => !prev)}
+                className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all duration-200 ${
+                  location.pathname.startsWith("/about")
+                    ? "bg-yellow-500 text-black shadow-md"
+                    : "text-gray-900 hover:bg-yellow-400 hover:text-black"
+                }`}
+              >
+                <Icon className="h-4 w-4" />
+                <span>{name}</span>
+                <ChevronDown className="h-3 w-3" />
+              </button>
+
+              {aboutMenuOpen && (
+                <div className="absolute left-0 top-full z-50 mt-2 w-56 rounded-xl border border-black/10 bg-white p-2 shadow-lg">
+                  <Link
+                    to="/about"
+                    onClick={() => {
+                      setAboutMenuOpen(false);
+                      onClick?.();
+                    }}
+                    className={`block rounded-lg px-3 py-2 text-sm transition ${
+                      location.pathname === "/about"
+                        ? "bg-yellow-500 text-black shadow-md"
+                        : "text-gray-900 hover:bg-yellow-400 hover:text-black"
+                    }`}
+                  >
+                    About Us
+                  </Link>
+                  <Link
+                    to="/about/management-team"
+                    onClick={() => {
+                      setAboutMenuOpen(false);
+                      onClick?.();
+                    }}
+                    className={`block rounded-lg px-3 py-2 text-sm transition ${
+                      location.pathname === "/about/management-team"
+                        ? "bg-yellow-500 text-black shadow-md"
+                        : "text-gray-900 hover:bg-yellow-400 hover:text-black"
+                    }`}
+                  >
+                    Management Team
+                  </Link>
+                </div>
+              )}
+            </div>
+          );
+        }
+
         const isActive = location.pathname === href;
         return (
           <Link

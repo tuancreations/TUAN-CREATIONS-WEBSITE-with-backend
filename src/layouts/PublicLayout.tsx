@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { ChevronDown, Menu, X } from "lucide-react";
 import BackButton from "../components/BackButton";
 
 const publicNav = [
@@ -13,6 +13,7 @@ const publicNav = [
 
 export default function PublicLayout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [aboutMenuOpen, setAboutMenuOpen] = useState(false);
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
@@ -35,21 +36,72 @@ export default function PublicLayout() {
           </div>
 
           <nav className="hidden flex-wrap justify-center gap-2 md:justify-end lg:flex">
-            {publicNav.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  `rounded-full px-3 py-2 text-xs transition sm:px-4 sm:text-sm ${
-                    isActive
-                      ? "bg-[var(--gold)] text-[var(--ink)]"
-                      : "text-[var(--text-soft)] hover:bg-[var(--card)] hover:text-[var(--text)]"
-                  }`
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
+            {publicNav.map((item) => {
+              if (item.to === "/about") {
+                return (
+                  <div key={item.to} className="relative">
+                    <button
+                      type="button"
+                      onClick={() => setAboutMenuOpen((prev) => !prev)}
+                      className={`inline-flex items-center gap-1 rounded-full px-3 py-2 text-xs transition sm:px-4 sm:text-sm ${
+                        location.pathname.startsWith("/about")
+                          ? "bg-[var(--gold)] text-[var(--ink)]"
+                          : "text-[var(--text-soft)] hover:bg-[var(--card)] hover:text-[var(--text)]"
+                      }`}
+                    >
+                      {item.label}
+                      <ChevronDown size={14} />
+                    </button>
+                    {aboutMenuOpen && (
+                      <div className="absolute left-0 top-full mt-2 w-56 rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-2 shadow-xl">
+                        <NavLink
+                          to="/about"
+                          onClick={() => setAboutMenuOpen(false)}
+                          className={({ isActive }) =>
+                            `block rounded-xl px-3 py-2 text-sm transition ${
+                              isActive
+                                ? "bg-[var(--gold)] text-[var(--ink)]"
+                                : "text-[var(--text-soft)] hover:bg-[var(--card)] hover:text-[var(--text)]"
+                            }`
+                          }
+                        >
+                          About Us
+                        </NavLink>
+                        <NavLink
+                          to="/about/management-team"
+                          onClick={() => setAboutMenuOpen(false)}
+                          className={({ isActive }) =>
+                            `block rounded-xl px-3 py-2 text-sm transition ${
+                              isActive
+                                ? "bg-[var(--gold)] text-[var(--ink)]"
+                                : "text-[var(--text-soft)] hover:bg-[var(--card)] hover:text-[var(--text)]"
+                            }`
+                          }
+                        >
+                          Management Team
+                        </NavLink>
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
+              return (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    `rounded-full px-3 py-2 text-xs transition sm:px-4 sm:text-sm ${
+                      isActive
+                        ? "bg-[var(--gold)] text-[var(--ink)]"
+                        : "text-[var(--text-soft)] hover:bg-[var(--card)] hover:text-[var(--text)]"
+                    }`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              );
+            })}
           </nav>
 
           <Link className="btn-primary hidden text-xs sm:text-sm lg:inline-flex" to="/dashboard">
@@ -69,22 +121,71 @@ export default function PublicLayout() {
         {mobileMenuOpen && (
           <div className="border-t border-[var(--line)] px-4 py-3 sm:px-6 lg:hidden">
             <nav className="flex flex-col gap-2">
-              {publicNav.map((item) => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  onClick={closeMobileMenu}
-                  className={({ isActive }) =>
-                    `rounded-full px-3 py-2 text-sm transition ${
-                      isActive
-                        ? "bg-[var(--gold)] text-[var(--ink)]"
-                        : "text-[var(--text-soft)] hover:bg-[var(--card)] hover:text-[var(--text)]"
-                    }`
-                  }
-                >
-                  {item.label}
-                </NavLink>
-              ))}
+              {publicNav.map((item) =>
+                item.to === "/about" ? (
+                  <div key={item.to} className="rounded-2xl border border-[var(--line)] p-2">
+                    <button
+                      type="button"
+                      onClick={() => setAboutMenuOpen((prev) => !prev)}
+                      className={`flex w-full items-center justify-between rounded-full px-3 py-2 text-sm transition ${
+                        location.pathname.startsWith("/about")
+                          ? "bg-[var(--gold)] text-[var(--ink)]"
+                          : "text-[var(--text-soft)] hover:bg-[var(--card)] hover:text-[var(--text)]"
+                      }`}
+                    >
+                      <span>About</span>
+                      <ChevronDown size={14} />
+                    </button>
+                    {aboutMenuOpen && (
+                      <div className="mt-2 flex flex-col gap-2 pl-2">
+                        <NavLink
+                          key="about-us-mobile"
+                          to="/about"
+                          onClick={closeMobileMenu}
+                          className={({ isActive }) =>
+                            `rounded-full px-3 py-2 text-sm transition ${
+                              isActive
+                                ? "bg-[var(--gold)] text-[var(--ink)]"
+                                : "text-[var(--text-soft)] hover:bg-[var(--card)] hover:text-[var(--text)]"
+                            }`
+                          }
+                        >
+                          About Us
+                        </NavLink>
+                        <NavLink
+                          key="management-team-mobile"
+                          to="/about/management-team"
+                          onClick={closeMobileMenu}
+                          className={({ isActive }) =>
+                            `rounded-full px-3 py-2 text-sm transition ${
+                              isActive
+                                ? "bg-[var(--gold)] text-[var(--ink)]"
+                                : "text-[var(--text-soft)] hover:bg-[var(--card)] hover:text-[var(--text)]"
+                            }`
+                          }
+                        >
+                          Management Team
+                        </NavLink>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <NavLink
+                    key={item.to}
+                    to={item.to}
+                    onClick={closeMobileMenu}
+                    className={({ isActive }) =>
+                      `rounded-full px-3 py-2 text-sm transition ${
+                        isActive
+                          ? "bg-[var(--gold)] text-[var(--ink)]"
+                          : "text-[var(--text-soft)] hover:bg-[var(--card)] hover:text-[var(--text)]"
+                      }`
+                    }
+                  >
+                    {item.label}
+                  </NavLink>
+                ),
+              )}
               <Link className="btn-primary mt-1 text-center text-sm" to="/dashboard" onClick={closeMobileMenu}>
                 Explore TUAN Digital Platform
               </Link>
